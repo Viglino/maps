@@ -1,11 +1,13 @@
-import './index.css'
 import 'ol/ol.css'
+import 'ol-ext/dist/ol-ext.css'
+import './index.css'
 import Map from 'ol/Map'
 import View from 'ol/View';
-import Geoportail from 'ol-ext/layer/Geoportail'
 import Tile from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import XYZ from 'ol/source/XYZ'
+import Geoportail from 'ol-ext/layer/Geoportail'
+import LayerSwitcher from 'ol-ext/control/LayerSwitcher'
 
 const map = new Map({
   target: 'map',
@@ -21,6 +23,7 @@ const map = new Map({
 });
   
 var molene = new Tile({
+  title: 'Minute Ouessant',
   extent: [-562641, 6161952, -539707, 6177630],
   source: new XYZ({
     url: './molene/data/molene_{z}-{x}-{y}.png',
@@ -33,6 +36,7 @@ var molene = new Tile({
 map.addLayer(molene);
 map.getView().fit(molene.getExtent());
 
+map.addControl(new LayerSwitcher());
 /* Export for debug */
 window.map = map;
 /**/

@@ -5,3 +5,23 @@
   bottom: 0;
   right: 0;
 }
+
+.ol-layerswitcher .layerup {
+  width: 2em;
+  background-color: transparent;
+}
+.ol-layerswitcher .layerup:before {
+  width: 1.8em;
+  height: 3px;
+  border-radius: 3px;
+  border: 0;
+  background-color: #369;
+  color: #369;
+  box-shadow: 0 -.5em, 0 .5em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ol-layerswitcher .layerup:after {
+  content: none;
+}
