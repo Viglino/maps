@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.map,
+.stat {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: calc(100% - 15em);
+  border: 0 solid #fff;
+  box-sizing: border-box;
+}
+.map .blend {
+  mix-blend-mode: multiply;
+}
+
+.stat {
+  height: 15em;
+  top: auto;
+  bottom: 0;
+}
+.stat h1 {
+  margin: 0;
+  color: #396;
+}
+.stat canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15em;
+  height: 15em;
+}
+
+#map1, #stat1 {
+  left: 0;
+  border-right-width: 3px;
+}
+#map2, #stat2 {
+  left: 50%;
+  border-left-width: 3px;
+}
+
+.map .ol-viewport .ol-progress-bar > .ol-waiting {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(359deg);
+  }
+}
+.ol-progress-bar .ol-waiting:before {
+  position: absolute;
+  content: "";
+  width: .5em;
+  height: .5em;
+  display: block;
+  border-radius: 50%;
+  box-shadow: 1em 0, -1em 0, 0 1em, 0 -1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ol-control.ol-progress-bar > .ol-bar {
+  background-color: #080;
+  border-right: 5px solid #0f0;
+  box-sizing: border-box;
+}
