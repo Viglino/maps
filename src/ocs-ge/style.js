@@ -3,9 +3,9 @@ import Style from 'ol/style/Style';
 
 const couverture = {
   'CS1.1.1.1': { name: 'Zones bâties', color: '#ff377a' },
-  'CS1.1.1.2': { name: 'Zones non bâties (route, places, parking)', color: '#ff9191' },
-  'CS1.1.2.1': { name: 'Zones à Matériaux minéraux Pierre-terre (voie ferrée, piste forestière, chemin empierrés, chantiers, carrières, salines…)', color: '#ffff99' },
-  'CS1.1.2.2': { name: 'Zones à autres matériaux composites (décharges…)', color: '#a64d00' },
+  'CS1.1.1.2': { name: 'Zones non bâties', color: '#ff9191', desc: 'route, places, parking' },
+  'CS1.1.2.1': { name: 'Zones à Matériaux minéraux Pierre-terre', color: '#ffff99', desc: 'voie ferrée, piste forestière, chemin empierrés, chantiers, carrières, salines…' },
+  'CS1.1.2.2': { name: 'Zones à autres matériaux composites', color: '#a64d00', desc: 'décharges…' },
   'CS1.2.1':   { name: 'Sols nus', color: '#cccccc' },
   'CS1.2.2':   { name: 'Surfaces d’eau', color: '#00ccf2' },
   'CS2.1.1.1': { name: 'Peuplements de feuillus', color: '#80ff00' },

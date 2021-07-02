@@ -1,6 +1,16 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+input[type="range"] {
+  vertical-align: middle;
+}
+.ol-ext-toggle-switch span {
+  color: #080;
+}
+.ol-ext-toggle-switch {
+  position: absolute;
+  bottom: .5em;
+}
 
 .map,
 .stat {
@@ -20,26 +30,31 @@ body {
   height: 15em;
   top: auto;
   bottom: 0;
+  padding: .5em;
 }
 .stat h1 {
   margin: 0;
   color: #396;
+  margin: 0 0 .5em;
 }
 .stat canvas {
   position: absolute;
   top: 0;
-  right: 0;
+  right: max(calc(50% - 15em), 1px);
   width: 15em;
   height: 15em;
 }
 
-#map1, #stat1 {
+#map-2015, #stat1 {
   left: 0;
   border-right-width: 3px;
 }
-#map2, #stat2 {
+#map-2018, #stat2 {
   left: 50%;
   border-left-width: 3px;
+}
+#map-2018 .ol-zoom {
+  display: none;
 }
 
 .map .ol-viewport .ol-progress-bar > .ol-waiting {
@@ -69,4 +84,33 @@ body {
   background-color: #080;
   border-right: 5px solid #0f0;
   box-sizing: border-box;
+}
+
+.stat p {
+  margin: 0;
+}
+.stat .pcent {
+  font-size: 2em;
+  font-weight: bold;
+  color: #080;
+  text-align: center;
+  width: min(5em, calc(100% - 7.5em));
+  margin: .5em 0;
+}
+.stat .pcent:after {
+  content: "%";
+}
+
+.bati:before,
+.veget:before {
+  content: "";
+  display: inline-block;
+  width: 1.5em;
+  height: 1em;
+  background-color: #ff377a;
+  vertical-align: middle;
+  margin-right: .5em;
+}
+.veget:before {
+  background-color: #00a600;
 }

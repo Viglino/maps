@@ -8,10 +8,15 @@ export default function(map) {
   const tip = new Tooltip({ offsetBox: [5, 0] });
   map.addOverlay(tip);
   hover.on('enter', (e) => {
-    tip.setInfo(couverture[e.feature.get('couverture')].name);
-  })
+    const cov = e.feature.get('couverture');
+    if (cov) tip.setInfo(couverture[cov].name);
+    else tip.setInfo();
+  });
+  hover.on('leave', (e) => {
+    tip.setInfo();
+  });
   map.getTargetElement().addEventListener('mouseleave', () => {
     tip.setInfo();
-  })
+  });
   return hover;
 }

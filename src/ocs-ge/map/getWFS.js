@@ -2,6 +2,7 @@ import TileWFS from 'ol-ext/source/TileWFS'
 import element from 'ol-ext/util/element'
 import VectorImage from 'ol/layer/VectorImage'
 import getStyle from '../style'
+import ProgressBar from 'ol-ext/control/ProgressBar'
 
 // get source source
 function getSource(type) {
@@ -31,16 +32,25 @@ function getSource(type) {
   return source;
 }
 
-export default function(type) {
-  return new VectorImage({
+/** getWFS
+ * @param {Map} map
+ * @param {string} type wfs typename
+ */
+export default function(map, date) {
+  const layer = new VectorImage({
     title: 'OSG-GE',
     className: 'blend',
     //source: getSource('CARTOGRAPHIE.PHYSIONOMIES:fond_physio_25_v2_valide'),
     // source: getSource('OCSGE.TEST:ocs_ge_arcachon_2015_20201117'),
     //source: getSource('OCSGE.TEST:ocs_ge_arcachon_2018_20201117'),
-    source: getSource(type),
+    source: getSource('OCSGE.TEST:ocs_ge_arcachon_'+date+'_20201117'),
     style: getStyle,
     opacity: 1,
     minZoom: 13  // prevent load on small zoom 
   });
+  map.addLayer(layer);
+  map.addControl(new ProgressBar({ 
+    layers: layer
+  }));
+  return layer;
 }

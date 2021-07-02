@@ -26,10 +26,27 @@
   
 </head>
 <body>
-  <div id="map1" class="map"></div>
-  <div id="stat1" class="stat"><h1>2015</h1><canvas></canvas></div>
-  <div id="map2" class="map"></div>
-  <div id="stat2" class="stat"><h1>2018</h1><canvas></canvas></div>
+  <div id="map-2015" class="map"></div>
+  <div id="stat1" class="stat">
+    <h1>2015</h1>
+    <p class="bati">Surfaces anthropisées</p>
+    <p class="veget">Autre surface</p>
+    <p class="pcent"></p>
+    <canvas></canvas>
+    <label class="clip ol-ext-toggle-switch">
+      <input type="checkbox"><span></span>
+      cercle
+      <input type="range" min="100" max="200" value="100" />
+    </label>
+  </div>
+  <div id="map-2018" class="map"></div>
+  <div id="stat2" class="stat">
+    <h1>2018</h1>
+    <p class="bati">Surfaces anthropisées</p>
+    <p class="veget">Autre surface</p>
+    <p class="pcent"></p>
+    <canvas></canvas>
+  </div>
   <script src="./ocs-ge/index.js"></script>
 </body>
 </html>
