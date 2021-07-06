@@ -38,7 +38,7 @@ function getSource(type) {
  */
 export default function(map, date) {
   const layer = new VectorImage({
-    title: 'OSG-GE',
+    title: 'OCS-GE',
     className: 'blend',
     //source: getSource('CARTOGRAPHIE.PHYSIONOMIES:fond_physio_25_v2_valide'),
     // source: getSource('OCSGE.TEST:ocs_ge_arcachon_2015_20201117'),
