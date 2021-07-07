@@ -29,8 +29,22 @@ clip.setActive(false);
 getHover(map1);
 getHover(map2);
 
-calcStat('stat1', map1, vector1.getSource(), clip);
-calcStat('stat2', map2, vector2.getSource(), clip);
+const chart1 = calcStat('stat1', map1, vector1.getSource(), clip);
+const chart2 = calcStat('stat2', map2, vector2.getSource(), clip);
+
+document.querySelector('#mode select').addEventListener('change', () => {
+  chart1.refresh();
+  chart2.refresh();
+});
+
+import Select from 'ol/interaction/Select'
+const sel = new Select();
+map1.addInteraction(sel);
+sel.on('select', (e) => {
+  const f = e.selected[0];
+  sel.getFeatures().clear();
+  if (f) console.log(f.getProperties());
+})
 
 /* DEBUG */
 window.map = map1;

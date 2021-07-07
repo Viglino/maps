@@ -12,6 +12,11 @@ input[type="range"] {
   bottom: .5em;
 }
 
+body.imper .artif,
+body.artif .imper {
+  display: none;
+}
+
 .map,
 .stat {
   position: fixed;
@@ -39,12 +44,37 @@ input[type="range"] {
 }
 .stat canvas {
   position: absolute;
-  top: 0;
+  top: 50%;
   right: max(calc(50% - 15em), 1px);
-  width: 15em;
-  height: 15em;
+  width: 14em;
+  height: auto!important;
+  max-width: 50%;
+  transform: translateY(-50%);
 }
 
+#mode {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+#mode select {
+  padding: .2em .5em .3em;
+  font-size: 1.2em;
+  text-align: center;
+  background: #00a600;
+  color: #fff;
+  border: 0;
+  outline: none;
+  border-radius: 0 0 .8em .8em;
+  border: 4px solid #fff;
+  border-top: 0;
+}
+#mode option {
+  background-color: #fff;
+  color: #333;
+}
 #map-2015, #stat1 {
   left: 0;
   border-right-width: 3px;
