@@ -42,8 +42,7 @@ function getMap(date) {
 
   // Grayscale
   var filter = new CanvasFilter({ grayscale: 100 });
-  layers[0].addFilter(filter);
-  layers[1].addFilter(filter);
+  layers.forEach(l => l.addFilter(filter) );
 
   const map = new Map ({
     target: 'map-'+date,
