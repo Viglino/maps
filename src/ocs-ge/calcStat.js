@@ -16,6 +16,8 @@ function getIndex(cov) {
   }
 }
 
+export { getIndex }
+
 /** Get labels
  * @returns {Array<string>}
  */

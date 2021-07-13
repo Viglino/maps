@@ -1,5 +1,6 @@
 import Fill from 'ol/style/Fill';
 import Style from 'ol/style/Style';
+import { getIndex } from './calcStat'
 
 const couverture = {
   'CS1.1.1.1': { name: 'Zones bâties', color: '#ff377a' },
@@ -36,14 +37,25 @@ for (let i in couverture) {
   })
 }
 
+const legendCheck = document.getElementById('legendCheck');
+const mode = document.querySelector('#mode select');
+
 /** Get couverture style
  */
 function getStyle(feature) {
   const s = feature.get('couverture');
-  if (!styleCache[s]) {
-    console.log('Missing: ',s)
+  if (legendCheck.checked) {
+    if (!styleCache[s]) {
+      console.log('Missing: ',s)
+    } else {
+      return styleCache[s];
+    }
   } else {
-    return styleCache[s];
+    if (getIndex(s)) {
+      return styleCache['CS2.1.1.3'];
+    } else {
+      return styleCache['CS1.1.1.2'];
+    }
   }
 }
 

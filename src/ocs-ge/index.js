@@ -35,8 +35,15 @@ const chart2 = calcStat('stat2', map2, vector2.getSource(), clip);
 document.querySelector('#mode select').addEventListener('change', () => {
   chart1.refresh();
   chart2.refresh();
+  vector1.changed();
+  vector2.changed();
+});
+document.getElementById('legendCheck').addEventListener('change', () => {
+  vector1.changed();
+  vector2.changed();
 });
 
+// Show info on select
 import Select from 'ol/interaction/Select'
 const sel = new Select();
 map1.addInteraction(sel);
