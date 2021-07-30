@@ -2,6 +2,7 @@ import TileWFS from 'ol-ext/source/TileWFS'
 import VectorImage from 'ol/layer/VectorImage'
 import getStyle from '../ocs-ge/style'
 import ProgressBar from 'ol-ext/control/ProgressBar'
+import Ajax from 'ol-ext/util/Ajax'
 
 // get source source
 function getSource(type) {
@@ -49,10 +50,61 @@ function getIndicator(map, date) {
     minZoom: 13  // prevent load on small zoom 
   });
   map.addLayer(layer);
-  map.addControl(new ProgressBar({ 
-    layers: layer
-  }));
   return layer;
 }
 
 export { getIndicator } 
+
+/** getCommunes
+ * @param {Map} map
+ * @param {string} type wfs typename
+ */
+function getCommunes(map, date) {
+  var source = getSource('OCS.BFC.'+date+':communes');
+  source.once('change', e => {
+    Ajax.get({
+      url: './ocsbfc/ind9-'+date+'.csv',
+      dataType: 'CSV',
+      success: (csv) => {
+        const json = {};
+        let title
+        csv = csv.replace(/\r/g,'').split('\n');
+        csv.forEach((l,i) => {
+          csv[i] = l.split(';');
+          if (i>0) {
+            csv[i].forEach((c,j) => {
+              if (j>0) {
+                json[csv[i][0]][title[j]] = parseFloat(c) || 0;
+              } else {
+                json[csv[i][0]] = {};
+              }
+            })
+          } else {
+            title = csv[0];
+          }
+        });
+        source.getFeatures().forEach(f => {
+          const insee = json[f.get('insee_com')];
+          for (let k in insee) {
+            f.set(k, insee[k]);
+          }
+        });
+      },
+      options: {
+        abort: false,
+      }
+    });
+  });
+  const layer = new VectorImage({
+    title: 'Communes '+date,
+    className: 'blend',
+    source: source,
+    // style: getStyle,
+    opacity: 1,
+    minZoom: 10  // prevent load on small zoom 
+  });
+  map.addLayer(layer);
+  return layer;
+}
+
+export { getCommunes } 

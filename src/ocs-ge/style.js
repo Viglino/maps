@@ -19,7 +19,7 @@ const couverture = {
   'CS2.1.3.1': { name: 'Vignes', color: '#a6ff80' },
   'CS2.1.3.2': { name: 'Autres lianes', color: '#e46d0a' },
   'CS2.2.1':   { name: 'Formations herbacées', color: [204, 242, 77] },
-  'CS2.1.1.1': { name: '1 Peuplements de feuillus', color: [128, 255, 0] },
+  'CS2.1.1.1': { name: 'Peuplements de feuillus', color: [128, 255, 0] },
   'CS2.1.1.2': { name: 'Peuplements de conifères', color: [0, 166, 0] },
   'CS2.2.1.1': { name: 'Prairies', color: '#6eff26' },
   'CS2.2.1.2': { name: 'Pelouses, herbe rase', color: '#93ff59' },

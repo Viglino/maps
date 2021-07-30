@@ -2,8 +2,11 @@ import Hover from 'ol-ext/interaction/Hover'
 import Tooltip from 'ol-ext/overlay/Tooltip'
 import {couverture} from '../style'
 
-export default function(map) {
-  const hover = new Hover({ cursor: 'pointer' });
+export default function(map, layers) {
+  const hover = new Hover({ 
+    layers: layers,
+    cursor: 'pointer'
+  });
   map.addInteraction(hover);
   const tip = new Tooltip({ offsetBox: [5, 0] });
   map.addOverlay(tip);
