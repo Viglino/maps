@@ -1,4 +1,5 @@
-import Chart from 'chart.js/auto'
+//import Chart from 'chart.js/auto'
+import { Chart } from 'chart.js'
 import { couverture } from '../ocs-ge/style'
 
 /** getChart */
@@ -18,6 +19,11 @@ export default function(stat, map, source, clip) {
       },
       options: {
         indexAxis: 'y',
+        scales: {
+          xAxis: {
+            // max: 1000 // maximum value
+          }
+        },
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
