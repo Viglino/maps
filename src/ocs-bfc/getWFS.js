@@ -5,11 +5,11 @@ import ProgressBar from 'ol-ext/control/ProgressBar'
 import Ajax from 'ol-ext/util/Ajax'
 
 // get source source
-function getSource(type) {
+function getSource(type, tzoom) {
   var source = new TileWFS({
     url: 'https://wxs.ign.fr/bx2thym8mdaruj2dg6ogfsi0/geoportail/wfs',
     typeName: type,
-    tileZoom: 15,
+    tileZoom: tzoom || 15,
     featureLimit: 20000
   });
   source.on('overload', (e) => console.log(e) );
@@ -60,41 +60,54 @@ export { getIndicator }
  * @param {string} type wfs typename
  */
 function getCommunes(map, date) {
-  var source = getSource('OCS.BFC.'+date+':communes');
-  source.once('change', e => {
-    Ajax.get({
-      url: './ocsbfc/ind9-'+date+'.csv',
-      dataType: 'CSV',
-      success: (csv) => {
-        const json = {};
-        let title
-        csv = csv.replace(/\r/g,'').split('\n');
-        csv.forEach((l,i) => {
-          csv[i] = l.split(';');
-          if (i>0) {
-            csv[i].forEach((c,j) => {
-              if (j>0) {
-                json[csv[i][0]][title[j]] = parseFloat(c) || 0;
-              } else {
-                json[csv[i][0]] = {};
-              }
-            })
-          } else {
-            title = csv[0];
-          }
-        });
-        source.getFeatures().forEach(f => {
-          const insee = json[f.get('insee_com')];
-          for (let k in insee) {
-            f.set(k, insee[k]);
-          }
-        });
-      },
-      options: {
-        abort: false,
+  const source = getSource('OCS.BFC.'+date+':communes', 8);
+  let json;
+  
+  // Faire la jointure...
+  function jointure() {
+    source.getFeatures().forEach(f => {
+      const insee = json[f.get('insee_com')];
+      for (let k in insee) {
+        f.set(k, insee[k]);
       }
     });
+  }
+
+  // Jointure au chargement
+  source.on('tileloadend', e => {
+    if (!json) {
+      json = {};
+      Ajax.get({
+        url: './ocsbfc/ind9-'+date+'.csv',
+        dataType: 'CSV',
+        success: (csv) => {
+          let title
+          csv = csv.replace(/\r/g,'').split('\n');
+          csv.forEach((l,i) => {
+            csv[i] = l.split(';');
+            if (i>0) {
+              csv[i].forEach((c,j) => {
+                if (j>0) {
+                  json[csv[i][0]][title[j]] = parseFloat(c) || 0;
+                } else {
+                  json[csv[i][0]] = {};
+                }
+              })
+            } else {
+              title = csv[0];
+            }
+          });
+          jointure();
+        },
+        options: {
+          abort: false,
+        }
+      });
+    } else {
+      jointure();
+    }
   });
+
   const layer = new VectorImage({
     title: 'Communes '+date,
     className: 'blend',
