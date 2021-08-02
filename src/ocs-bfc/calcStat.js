@@ -3,7 +3,7 @@ import { Chart } from 'chart.js'
 import { couverture } from '../ocs-ge/style'
 
 /** getChart */
-export default function(stat, map, source, clip) {
+export default function(stat) {
 
   const chart = {
     element: document.getElementById(stat).querySelector('.pcent'),

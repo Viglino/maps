@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "chart.js": "^3.4.0",
+    "chartjs-chart-sankey": "^0.7.1",
     "ol": "^6.5.0",
     "ol-ext": "^3.2.4"
   }

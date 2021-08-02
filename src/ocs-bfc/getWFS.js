@@ -16,6 +16,8 @@ function getSource(type, tzoom) {
   return source;
 }
 
+export { getSource }
+
 /** getWFS
  * @param {Map} map
  * @param {string} type wfs typename

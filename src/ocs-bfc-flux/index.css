@@ -1,0 +1,16 @@
+#stat1 {
+  width: 100%;
+  z-index: 1;
+}
+#stat1 h1 {
+  text-align: center;
+}
+.stat canvas {
+  max-height: calc(100% - 4em);
+  max-width: 30em;
+  left: 50%;
+  right: unset;
+  top: unset;
+  bottom: 1em;
+  transform: translateX(-50%);
+}
