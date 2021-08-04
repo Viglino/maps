@@ -22,10 +22,11 @@ export { getSource }
  * @param {Map} map
  * @param {string} type wfs typename
  */
-export default function(map, date) {
+export default function(map, date, title) {
+  console.log(title)
   const layer = new VectorImage({
-    title: 'OCS-GE',
-    className: 'blend',
+    title: title ?  title : 'OCS-GE',
+    className: 'blend '+title,
     source: getSource(date === 2011 ? 'OCS.BFC.2011:ocsge_58_2011_20p' : 'OCS.BFC.2017:ocsge_58_2017_man_20p'),
     style: getStyle,
     opacity: 1,
@@ -45,9 +46,9 @@ export default function(map, date) {
 function getIndicator(map, date) {
   const layer = new VectorImage({
     title: 'Indicateur 9',
-    className: 'blend',
+    className: 'blend '+date,
     source: getSource('OCS.BFC.'+date+':indicateur9_'+date),
-    // style: getStyle,
+    style: getStyle,
     opacity: 1,
     minZoom: 13  // prevent load on small zoom 
   });

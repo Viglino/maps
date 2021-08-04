@@ -55,25 +55,31 @@ function getStat(stat) {
     }
   }
   chart.chart = new Chart(chart.ctx, chart.config);
+  chart.ctx.canvas.style.display = 'none';
 
   const config = chart.config;
   chart.show = (stats) => {
-    const data = config.data.datasets[0].data = [];
-    const labels = config.data.datasets[0].labels;
     if (stats) {
-      stats.forEach(s => {
-        data.push({
-          from: '1-'+s[0], 
-          to: '2-'+s[1], 
-          flow: s[2]
+      chart.ctx.canvas.style.display = 'block';
+      const data = config.data.datasets[0].data = [];
+      const labels = config.data.datasets[0].labels;
+      if (stats) {
+        stats.forEach(s => {
+          data.push({
+            from: '1-'+s[0], 
+            to: '2-'+s[1], 
+            flow: s[2]
+          });
+          labels['1-'+s[0]] = s[0];
+          labels['2-'+s[1]] = s[1];
         });
-        labels['1-'+s[0]] = s[0];
-        labels['2-'+s[1]] = s[1];
-      });
+      } else {
+        data.push({ from: 'a', to: 'b', flow: 1 });
+      }
+      chart.chart.update();
     } else {
-      data.push({ from: 'a', to: 'b', flow: 1 });
+      chart.ctx.canvas.style.display = 'none';
     }
-    chart.chart.update();
   }
   return chart;
 }

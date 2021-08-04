@@ -1,9 +1,7 @@
 import Select from 'ol/interaction/Select'
 
 function onSelect(sel, stat, sel2, layer2) {
-  console.log('sel')
   sel.on('select', e => {
-    console.log(e)
     const f = e.selected[0];
     const insee = f.get('insee_com');
     sel2.getFeatures().clear();

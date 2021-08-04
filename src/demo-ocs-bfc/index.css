@@ -1,0 +1,40 @@
+h1,
+h2 {
+  margin: 1em 0 0;
+}
+.map, .stat {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 15em);
+  height: 100%;
+  border: 0 solid #fff;
+  box-sizing: border-box;
+}
+.map .blend {
+  mix-blend-mode: multiply;
+}
+
+.stat {
+  left: auto;
+  right: 0;
+  width: 15em;
+  padding: .5em;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 1em;
+}
+
+.stat {
+  overflow: auto;
+}
+.stat .graph {
+  margin-top: .5em;
+  height: 25em;
+}
+.stat canvas {
+  display: none;
+}
