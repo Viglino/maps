@@ -22,7 +22,7 @@ export { getSource }
  * @param {Map} map
  * @param {string} type wfs typename
  */
-export default function(map, date, title) {
+export default function(map, date, title, nomap) {
   console.log(title)
   const layer = new VectorImage({
     title: title ?  title : 'OCS-GE',
@@ -32,7 +32,7 @@ export default function(map, date, title) {
     opacity: 1,
     minZoom: 13  // prevent load on small zoom 
   });
-  map.addLayer(layer);
+  if (!nomap) map.addLayer(layer);
   map.addControl(new ProgressBar({ 
     layers: layer
   }));
