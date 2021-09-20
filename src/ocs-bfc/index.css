@@ -8,3 +8,11 @@
   max-width: 100%;
   right: 0;
 }
+
+body.oneMap #map-2011 {
+  display: none;
+}
+body.oneMap #map-2017 {
+  left: 0;
+  width: 100%;
+}

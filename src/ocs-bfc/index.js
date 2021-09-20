@@ -3,12 +3,17 @@ import 'ol-ext/dist/ol-ext.css'
 import '../ocs-ge/index.css'
 import './index.css'
 
+/* only one map */
+const oneMap = true;
+if (oneMap) {
+  document.body.className = "oneMap";
+}
 
 import getMap from '../ocs-ge/map/getMap'
 const map1 = getMap(2011, [351328, 5940916])
 const map2 = getMap(2017, [351328, 5940916])
 
-import getWFS, { getCommunes, getIndicator } from './getWFS'
+import getWFS, { getCommunes } from './getWFS'
 const layer1 = getWFS(map1, 2011);
 const layer2 = getWFS(map2, 2017);
 
@@ -18,6 +23,12 @@ const ind2 = getIndicator(map2, 2017);
 */
 const communes1 = getCommunes(map1, 2011);
 const communes2 = getCommunes(map2, 2017);
+if (oneMap) {
+  communes1.setOpacity(0);
+  communes1.set('displayInLayerSwitcher', false);
+  map1.removeLayer(communes1);
+  map2.addLayer(communes1);
+}
 
 import Synchronize from 'ol-ext/interaction/Synchronize'
 map1.addInteraction(new Synchronize({ maps: [map2] }));

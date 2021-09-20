@@ -8,13 +8,13 @@ const map1 = getMap(2011, [351328, 5940916])
 import getWFS from '../ocs-bfc/getWFS'
 const couverture = getWFS(map1, 2011, 'Couverture');
 couverture.setVisible(false)
-couverture.set('displayInLayerSwitcher', false);
+// couverture.set('displayInLayerSwitcher', false);
 
 import { getUsageStyle } from '../ocs-ge/style'
 const usage = getWFS(map1, 2011, 'Usage');
 usage.setStyle(getUsageStyle);
 usage.setVisible(false)
-usage.set('displayInLayerSwitcher', false);
+// usage.set('displayInLayerSwitcher', false);
 
 /*
 couverture.on('change:visible', () => {
@@ -28,7 +28,7 @@ usage.on('change:visible', () => {
 import { getIndicator } from '../ocs-bfc/getWFS'
 const indicator1 = getIndicator(map1, '2011');
 
-/* Switcher */
+/* Switcher * /
 const layers = [couverture, usage, indicator1]
 document.getElementById('indicateur').addEventListener('change', function() {
   layers.forEach(l => {
@@ -36,6 +36,7 @@ document.getElementById('indicateur').addEventListener('change', function() {
     l.set('displayInLayerSwitcher', l.get('title') === this.value);
   });
 });
+/**/
 
 import getCommunes from '../ocs-bfc-flux/getCommunes'
 const communes1 = getCommunes(map1, 2011);

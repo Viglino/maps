@@ -1,0 +1,14 @@
+.stat canvas {
+  max-height: calc(100% - 2em);
+  max-width: 100%;
+  right: 0;
+  transform: translateY(-50%) translateY(1em);
+}
+.stat h1 {
+  line-height: 1em;
+  font-size: 1.3em;
+}
+#map-2017 {
+  left: 0;
+  width: 100%;
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Maps</title>
+  <title>Comparaison spatiale</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="description" content="Maps" />
   <meta name="keywords" content="" />
@@ -26,36 +26,15 @@
   
 </head>
 <body>
-  <!--
-  <div id="mode">
-    <select>
-      <option value="artif">Artificialisation</option>
-      <option value="imper">Imperméabilisation</option>
-    </select>
-  </div>
-  -->
-  <div id="map-2011" class="map"></div>
+  <div id="map-2017" class="map"></div>
   <div id="stat1" class="stat">
-    <h1>2011 - 2017</h1>
-    <label>Indicateur : </label>
-    <select id="indicateur">
-      <option value="Indicateur 9">Indicateur 9</option>
-      <option value="Indicateur 10" disabled="disabled">Indicateur 10</option>
-      <option value="Indicateur 11" disabled="disabled">Indicateur 11</option>
-    </select>
-    <label>Découpage : </label>
-    <select id="decoupage">
-      <option value="commune">commune</option>
-      <option value="dep" disabled="disabled">Département</option>
-      <option value="region" disabled="disabled">Région</option>
-    </select>
-
-    <h2 id="title"></h2>
-    <div class="graph">
-      <canvas></canvas>
-    </div>
-
+    <h1></h1>
+    <canvas></canvas>
   </div>
-  <script src="./demo-ocs-bfc/index.js"></script>
+  <div id="stat2" class="stat">
+    <h1></h1>
+    <canvas></canvas>
+  </div>
+  <script src="./comp-ocs-bfc/index.js"></script>
 </body>
 </html>
