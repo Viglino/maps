@@ -8,11 +8,15 @@ const map2 = getMap(2017, [351328, 5940916])
 
 import getWFS, { getCommunes } from '../ocs-bfc/getWFS'
 const couverture = getWFS(map2, 2017, 'Couverture');
+couverture.setVisible(false)
 
 import { getUsageStyle } from '../ocs-ge/style'
 const usage = getWFS(map2, 2017, 'Usage');
 usage.setStyle(getUsageStyle);
 usage.setVisible(false)
+
+import { getIndicator } from '../ocs-bfc/getWFS'
+const indicator1 = getIndicator(map2, '2017');
 
 const communes2 = getCommunes(map2, 2017);
 

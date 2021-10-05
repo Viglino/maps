@@ -1,3 +1,9 @@
+.stat {
+  width: calc(50% - 5em);
+}
+#stat2 {
+  left: calc(50% - 5em);
+}
 .stat canvas {
   max-height: calc(100% - 2em);
   max-width: 100%;
@@ -10,5 +16,20 @@
 }
 #map-2017 {
   left: 0;
-  width: 100%;
+  right: auto;
+  width: calc(100% - 10em);
+}
+
+#volet {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 10em;
+  background-color: #fff;
+  text-align: center;
+}
+#volet h1 {
+  font-size: 1.4em;
+  color: #396;
 }

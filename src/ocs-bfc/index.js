@@ -14,8 +14,17 @@ const map1 = getMap(2011, [351328, 5940916])
 const map2 = getMap(2017, [351328, 5940916])
 
 import getWFS, { getCommunes } from './getWFS'
-const layer1 = getWFS(map1, 2011);
-const layer2 = getWFS(map2, 2017);
+const layer1 = getWFS(map1, 2011, 'Couverture');
+const layer2 = getWFS(map2, 2017, 'Couverture');
+layer2.setVisible(false)
+
+import { getUsageStyle } from '../ocs-ge/style'
+const usage = getWFS(map2, 2017, 'Usage');
+usage.setStyle(getUsageStyle);
+usage.setVisible(false)
+
+import { getIndicator } from '../ocs-bfc/getWFS'
+const indicator1 = getIndicator(map2, '2017');
 
 /*
 const ind1 = getIndicator(map1, 2011);
