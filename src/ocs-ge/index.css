@@ -75,14 +75,19 @@ body.artif .imper {
   background-color: #fff;
   color: #333;
 }
-#map-2015, #stat1 {
+#map-2011,
+#map-2015, 
+#stat1 {
   left: 0;
   border-right-width: 3px;
 }
-#map-2018, #stat2 {
+#map-2017,
+#map-2018, 
+#stat2 {
   left: 50%;
   border-left-width: 3px;
 }
+#map-2017 .ol-zoom,
 #map-2018 .ol-zoom {
   display: none;
 }

@@ -1,15 +1,20 @@
 import Hover from 'ol-ext/interaction/Hover'
 import Tooltip from 'ol-ext/overlay/Tooltip'
-import {couverture} from '../style'
+import {couverture, usage} from '../style'
 
-export default function(map) {
-  const hover = new Hover({ cursor: 'pointer' });
+export default function(map, layers, attribut) {
+  attribut = attribut || 'couverture';
+  var table = (attribut === 'couverture' ? couverture : usage);
+  const hover = new Hover({ 
+    layers: layers,
+    cursor: 'pointer'
+  });
   map.addInteraction(hover);
   const tip = new Tooltip({ offsetBox: [5, 0] });
   map.addOverlay(tip);
   hover.on('enter', (e) => {
-    const cov = e.feature.get('couverture');
-    if (cov) tip.setInfo(couverture[cov].name);
+    const cov = e.feature.get(attribut);
+    if (cov) tip.setInfo(table[cov].name);
     else tip.setInfo();
   });
   hover.on('leave', (e) => {
