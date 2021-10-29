@@ -9,23 +9,6 @@
 <script src="./threejs/OrbitControls.js"></script>
 <script src="./threejs/ViewHelper.js"></script>
 <script src="./qis2threejs/Qgis2threejs.js"></script>
-<style>
-  #footer img {
-    vertical-align: middle;
-  }
-  #title {
-    position: absolute;
-    z-index: 100;
-    margin: .5em;
-    background-color: #565656;
-    color: transparent;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, .5);
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, .5);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-  }
-</style>
 </head>
 <body>
 <h1 id="title">
@@ -130,7 +113,7 @@ var container = document.getElementById("view"),
 app.init(container);       // initialize viewer
 
 // load the scene
-app.loadSceneFile("./data/index/scene.json", function (scene) {
+app.loadSceneFile("./gallica-carte-frejus-antibe-data/index/scene.json", function (scene) {
   // scene file has been loaded
   app.start();
 }, function (scene) {

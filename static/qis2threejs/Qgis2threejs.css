@@ -296,3 +296,19 @@ body {
   z-index: 1000;
   display: none;
 }
+
+#footer img {
+  vertical-align: middle;
+}
+#title {
+  position: absolute;
+  z-index: 100;
+  margin: .5em;
+  background-color: #565656;
+  color: transparent;
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, .5);
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, .5);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+}
