@@ -297,9 +297,6 @@ body {
   display: none;
 }
 
-#footer img {
-  vertical-align: middle;
-}
 #title {
   position: absolute;
   z-index: 100;
@@ -311,4 +308,13 @@ body {
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
+}
+#title img {
+  vertical-align: middle;
+  max-height: 3em;
+}
+
+#footer img {
+  vertical-align: middle;
+  max-height: 2em;
 }

@@ -12,7 +12,7 @@
 </head>
 <body>
   <h1 id="title">
-    Parc National des Écrins
+    <img src="./PNE_coeur-data/logo.png" />
   </h1>
   
 <div id="view">
@@ -106,7 +106,7 @@ var container = document.getElementById("view"),
 app.init(container);       // initialize viewer
 
 // load the scene
-app.loadSceneFile("./PNE_coeur-data/index/scene.json", function (scene) {
+app.loadSceneFile("./PNE_coeur-data/scene.json", function (scene) {
   // scene file has been loaded
   app.start();
 }, function (scene) {
