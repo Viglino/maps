@@ -1,1 +1,63 @@
-{"type": "scene", "properties": {"width": 100.0, "height": 52.041403105232895, "baseExtent": {"x": 1028748.2188602, "y": 6293445.764521138, "width": 98050.65576425105, "height": 51026.93701359816, "rotation": 31.3}, "zExaggeration": 3.0, "zShift": 0.0}, "layers": [{"type": "layer", "id": 0, "properties": {"name": "D\u00e9coup\u00e9 (masque)", "clickable": true, "visible": true, "type": "dem", "shading": true}, "data": [{"type": "block", "layer": 0, "block": 0, "width": 100.0, "height": 52.03333333333334, "translate": [0.0, 0.0, 0.0], "zShift": 0.0, "zScale": 0.0030596429739471365, "material": {"type": 0, "image": {"url": "./gallica-carte-frejus-antibe-data/a0.jpg"}, "ds": 1}, "grid": {"width": 278, "height": 145, "url": "./gallica-carte-frejus-antibe-data/a0.bin"}, "sides": {"mtl": {"type": 0, "c": 13417386}}}]}]}
+{
+    "type": "scene",
+    "properties": {
+     "width": 100,
+     "height": 52.041403105232895,
+     "baseExtent": {
+      "x": 1028748.2188602,
+      "y": 6293445.764521138,
+      "width": 98050.65576425105,
+      "height": 51026.93701359816,
+      "rotation": 31.3
+     },
+     "zExaggeration": 3,
+     "zShift": 0
+    },
+    "layers": [
+     {
+      "type": "layer",
+      "id": 0,
+      "properties": {
+       "name": "Carte des Alpes Maritimes",
+       "clickable": true,
+       "visible": true,
+       "type": "dem",
+       "shading": true
+      },
+      "data": [
+       {
+        "type": "block",
+        "layer": 0,
+        "block": 0,
+        "width": 100,
+        "height": 52.03333333333334,
+        "translate": [
+         0,
+         0,
+         0
+        ],
+        "zShift": 0,
+        "zScale": 0.0030596429739471365,
+        "material": {
+         "type": 0,
+         "image": {
+          "url": "./gallica-carte-frejus-antibe-data/a0.jpg"
+         },
+         "ds": 1
+        },
+        "grid": {
+         "width": 278,
+         "height": 145,
+         "url": "./gallica-carte-frejus-antibe-data/a0.bin"
+        },
+        "sides": {
+         "mtl": {
+          "type": 0,
+          "c": 13417386
+         }
+        }
+       }
+      ]
+     }
+    ]
+   }
