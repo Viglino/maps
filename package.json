@@ -39,6 +39,6 @@
     "chart.js": "^3.6.0",
     "chartjs-chart-sankey": "^0.7.1",
     "ol": "^6.5.0",
-    "ol-ext": "^3.2.4"
+    "ol-ext": "^4.0.14"
   }
 }

@@ -7,7 +7,8 @@ import Ajax from 'ol-ext/util/Ajax'
 // get source source
 function getSource(type, tzoom) {
   var source = new TileWFS({
-    url: 'https://wxs.ign.fr/bx2thym8mdaruj2dg6ogfsi0/geoportail/wfs',
+    // url: 'https://wxs.ign.fr/bx2thym8mdaruj2dg6ogfsi0/geoportail/wfs',
+    url: 'https://data.geopf.fr/wfs/ows',
     typeName: type,
     tileZoom: tzoom || 15,
     featureLimit: 20000
@@ -27,7 +28,7 @@ export default function(map, date, title, nomap) {
   const layer = new VectorImage({
     title: title ?  title : 'OCS-GE',
     className: 'blend '+title,
-    source: getSource(date === 2011 ? 'OCS.BFC.2011:ocsge_58_2011_20p' : 'OCS.BFC.2017:ocsge_58_2017_man_20p'),
+    source: getSource(date === 2011 ? 'OCS-BFC_2011_BDD_WLD_WM_WFS_23-07-2021:ocsge_58_2011_20p' : 'OCS-BFC_2017_BDD_WLD_WM_WFS_23-07-2021:ocsge_58_2017_man_20p'),
     style: getStyle,
     opacity: 1,
     minZoom: 13  // prevent load on small zoom 
@@ -47,7 +48,8 @@ function getIndicator(map, date) {
   const layer = new VectorImage({
     title: 'Indicateur 9',
     className: 'blend '+date,
-    source: getSource('OCS.BFC.'+date+':indicateur9_'+date),
+    // source: getSource('OCS.BFC.'+date+':indicateur9_'+date),
+    source: getSource('OCS-BFC_'+date+'_BDD_WLD_WM_WFS_23-07-2021:indicateur9_'+date),
     style: getStyle,
     opacity: 1,
     minZoom: 13  // prevent load on small zoom 

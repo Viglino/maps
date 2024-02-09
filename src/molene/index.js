@@ -13,7 +13,7 @@ const map = new Map({
   target: 'map',
   layers: [
     new Geoportail({ layer: 'ORTHOIMAGERY.ORTHOPHOTOS', visible: false }),
-    new Geoportail({ layer: 'GEOGRAPHICALGRIDSYSTEMS.MAPS', gppKey: 'h1osiyvfm7c4wu976jv6gpum' }),
+    new Geoportail({ layer: 'GEOGRAPHICALGRIDSYSTEMS.MAPS', gppKey: 'ign_scan_ws' }),
     new Tile({ title: 'OSM', source: new OSM(), visible: false })
   ],
   view: new View({

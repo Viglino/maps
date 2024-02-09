@@ -8,6 +8,7 @@ import ProgressBar from 'ol-ext/control/ProgressBar'
 function getSource(type) {
   var source = new TileWFS({
     url: 'https://wxs.ign.fr/qvo9gdluu6vvf98hplg8iz5n/geoportail/wfs',
+    // url: 'https://data.geopf.fr/wfs/ows',
     typeName: type,
     tileZoom: 15,
     featureLimit: 20000
