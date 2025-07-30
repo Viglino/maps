@@ -2,12 +2,11 @@
   "name": "jmv-maps",
   "version": "1.0.0",
   "description": "Maps",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/index.html --out-dir ./.dist --port 8181",
+    "start": "parcel --dist-dir ./.dist ./src/index.html",
     "lint": "eslint --fix src/ || exit 0",
-    "build": "parcel build ./src/index.html --no-source-maps --public-url . --out-dir ./maps"
+    "build": "parcel build --dist-dir ./maps ./src/index.html --public-url ./ --no-source-maps"
   },
   "repository": {
     "type": "git",
@@ -25,20 +24,21 @@
   },
   "homepage": "https://github.com/Viglino/maps#readme",
   "devDependencies": {
-    "parcel-bundler": "^1.12.5",
-    "parcel-plugin-clean-dist": "0.0.6",
-    "parcel-plugin-static-files-copy": "^2.6.0"
-  },
-  "staticFiles": {
-    "staticPath": [
-      "./assets"
-    ],
-    "watcherGlob": "**"
+    "parcel": "^2.11.0",
+    "@parcel/transformer-inline-string": "^2.11.0",
+    "@parcel/transformer-sass": "^2.11.0",
+    "parcel-reporter-static-files-copy": "^1.5.3",
+    "buffer": "^6.0.3",
+    "process": "^0.11.10"
   },
   "dependencies": {
     "chart.js": "^3.6.0",
     "chartjs-chart-sankey": "^0.7.1",
     "ol": "^6.5.0",
     "ol-ext": "^4.0.14"
+  },
+  "staticFiles": {
+    "staticPath": "assets",
+    "watcherGlob": "**"
   }
 }
