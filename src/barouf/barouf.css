@@ -213,3 +213,12 @@ footer section img {
   height: 100%;
   margin: 0 .5em;
 }
+
+@media (max-height: 800px), (max-width: 800px) {
+  aside p, aside img {
+    display: none;
+  }
+  header {
+    font-size: 0.8em;
+  }
+}
