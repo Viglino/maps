@@ -27,14 +27,14 @@ function showFeature(features) {
   const f = features[Math.trunc(Math.random() * features.length)];
   let info = '';
   const sentence = [
-    `Le gars il s'appelle Tin, c'est le bar à Tin`,
-    `Le gars il s'appelle Mine, c'est le bar à Mine`,
-    `Le gars il s'appelle Ka, c'est le bar à Ka`,
-    `Le gars il s'appelle Cuda, c'est le bar à Cuda, ha!`,
-    `Le gars il s'appelle Jo, c'est le bar Jo`,
-    `Le gars il s'appelle Jo, c'est le Jo'bar`,
-    `Le gars il s'appelle Bichette, c'est le bar'Bichette`,
-    `Le gars il s'appelle Bo, c'est le Bo bar`
+    `Le gars il s'appelle Tin,<br/> c'est le bar à Tin`,
+    `Le gars il s'appelle Mine,<br/> c'est le bar à Mine`,
+    `Le gars il s'appelle Ka,<br/> c'est le bar à Ka`,
+    `Le gars il s'appelle Cuda,<br/> c'est le bar à Cuda, ♫ ha!`,
+    `Le gars il s'appelle Joe,<br/> c'est le bar'Joe`,
+    `Le gars il s'appelle Jo,<br/> c'est le Jo'bar`,
+    `Le gars il s'appelle Bichette,<br/> c'est le bar'Bichette`,
+    `Le gars il s'appelle Bo,<br/> c'est le Bo'bar`
   ]
   if (f) {
     const url = [
@@ -46,17 +46,17 @@ function showFeature(features) {
     ]
     info = `<h2>${f.properties.Nom}</h2>`
     + `<img src="${url[Math.trunc(Math.random()*url.length)]}" />`
-    + `<p>${f.properties.numeroVoieEtablissement || ''}${f.properties.indiceRepetitionEtablissement || ''} ${f.properties.libelleVoieEtablissement || ''} </p>`
-    + `<p>${f.properties.codePostalEtablissement || ''} ${f.properties.libelleCommuneEtablissement || ''}</p>`
+    + `<p>${f.properties.numeroVoieEtablissement || ''}${f.properties.indiceRepetitionEtablissement || ''} ${f.properties.typeVoieEtablissement || ''} ${f.properties.libelleVoieEtablissement || ''} <br/>`
+    + `${f.properties.codePostalEtablissement || ''} ${f.properties.libelleCommuneEtablissement || ''}</p>`
   } else {
     info = `<h2>Jeux de mots</h2>`
-    + `<img class="jamel" src="https://storage.googleapis.com/bleeps-a06a1.appspot.com/bleeps_img/AsterixFilm_2_LePhareAon.jpg" />`
+    + `<img class="jamel" src="https://macarte.ign.fr/api/image/img_rbt18795" />`
     + `<p>${sentence[Math.trunc(Math.random()*sentence.length)]}</p>`;
   }
-  document.querySelector('aside').innerHTML = info;
-  if (linkDiv) document.querySelector('aside').appendChild(linkDiv);
+  document.querySelector('aside DIV').innerHTML = info;
 }
 
+/* Initialize statistics + main links */
 function initStats() {
   mapAPI.getFeatures({}, features => {
     stats = {
@@ -64,11 +64,14 @@ function initStats() {
       filtered: 0
     }
     showStats(0)
+    // Create main links
     const tab = {}
     const remove = ['CAFE', 'SARL', 'TABAC', 'BISTROT', 'BAR', 'BRASSERIE', 
-      'RESTAURANT', 'PUB', 'SNACK', 'PIZZERIA', 'TRAITEUR', 'BISTRO', 'BISTROT',
-      'EURL', 'COMPTOIR', 'COFFEE', 'HOTEL', 'BUVETTE', 'RELAIS', 'AUBERGE', 'CAVE', 
-      'MAISON', 'PIZZA', 'TAVERNE', 'CLUB'];
+      'RESTAURANT', 'PUB', 'SNACK', 'PIZZERIA', 'TRAITEUR', 'BISTRO', 'BISTROT', 'EURL', 
+      'COMPTOIR', 'COFFEE', 'HOTEL', 'L\'HOTEL', 'BUVETTE', 'RELAIS', 'AUBERGE', 'L\'AUBERGE', 
+      'CAVE', 'MAISON', 'PIZZA', 'TAVERNE', 'CLUB', 'DEUX', 'FOYER', 'TABLE', 'CASA', 'COMITE', 
+      'ASSOCIATION', 'INDIVISION', 'RESTAURATION', 'FETES', 'PRESSE', 'LOUNGE', 'SOCIETE', 'SASU',
+      'AMICALE'];
     features.forEach(feature => {
       feature.properties.Nom.split(/ |-|,/).forEach(word => {
         if (word.length > 3 && remove.indexOf(word) === -1) {
@@ -78,16 +81,46 @@ function initStats() {
           tab[word]++;
         }
       })
+      // Spetial cases
+      if (/HOTEL DE VILLE/.test(feature.properties.Nom)) {
+        tab['HOTEL DE VILLE'] = (tab['HOTEL DE VILLE'] || 0) + 1;
+      }
     })
+    // Clean up
+    tab.VOUS -= tab.RENDEZ
+    const cleanup  = {
+      'P(E|\')TITE?S?': ['P\'TIT', 'P\'TITS', 'P\'TITE', 'P\'TITES', 'PETIT', 'PETITS', 'PETITE', 'PETITES'],
+      'ETOILE': [ 'L\'ETOILE' ],
+      'ESCALE': [ 'L\'ESCALE' ],
+      'EMBUSCADE': [ 'L\'EMBUSCADE' ],
+      'HALLES?': [ 'HALLE', 'HALLES' ],
+      'RENDEZ(-| )VOUS': [ 'RENDEZ' ],
+      'BOULES?': [ 'BOULE', 'BOULES' ],
+      'ATELIER': [ 'L\'ATELIER' ],
+      'SAINTE?S?': [ 'SAINT', 'SAINTS', 'SAINTE', 'SAINTES' ],
+      'MOULINS?': [ 'MOULIN', 'MOULINS' ],
+      'VILLE': [],
+      'JEAN BART': [ 'BART' ]
+    }
+    Object.keys(cleanup).forEach(k => {
+      tab[k] = tab[k] || 0;
+      cleanup[k].forEach(k2 => {
+        tab[k] += (tab[k2] || 0)
+        delete tab[k2]
+      })
+    })
+    // Sort links
     const keys = Object.keys(tab).sort((a, b) => {
       return tab[b] - tab[a];
     })
+    // Create links
     let links = '';
     for (let i=0; i<100; i++) {
-      links += `<a href="#" class="link" data-what="${keys[i]}" data-nb="${tab[keys[i]]}" aria-label="rechercher...">${keys[i]}</a> - `;
+      links += `<a href="#" class="link" data-what="${keys[i]}" data-nb="${tab[keys[i]]}" aria-label="rechercher...">`
+        + keys[i].replace(/.\?/g,'').replace(/\((.)[^\)]*\)/g,'$1')
+        +`</a> - `;
     }
-    linkDiv = document.createElement('div');
-    linkDiv.className = 'links';
+    linkDiv = document.querySelector('aside .links');
     linkDiv.innerHTML = links;
     linkDiv.querySelectorAll('.link').forEach(link => {
       link.addEventListener('click', e => {
@@ -119,10 +152,18 @@ function filter(what, value) {
       features: features, 
       clear: true
     })
+    /*
+    if (what === 'Nom') {
+      features.forEach(feature => {
+        console.log(feature.properties.Nom)
+      })
+    }
+    */
     showStats(features);
   })
 }
 
+/* Show statistics / select number */
 function showStats(features) {
   const nb = Array.isArray(features) ? features.length : (features || 0);
   stats.filtered = nb || 0;
@@ -143,9 +184,9 @@ function showStats(features) {
     selectedEl.textContent = 0;
   }
   showFeature(features);
-
 }
 
+/* Handle search input */
 document.querySelector('input[type="search"]').addEventListener('change', e => {
   const value = e.target.value;
   if (value) {
@@ -155,21 +196,25 @@ document.querySelector('input[type="search"]').addEventListener('change', e => {
   }
 })
 document.querySelector('input[type="search"]').addEventListener('input', e => {
-  if (!e.target.value) {
-    showStats(0);
+  if (!e.target.value && !e.inputType) {
+    e.target.blur()
   }
 })
+
+/* Handle select action */
 document.querySelector('header select').value = '';
 document.querySelector('header select').addEventListener('change', e => {
   const value = e.target.value;
-  console.log(value)
   if (value === 'show') {
+    // Show game
     document.querySelector('input[type="search"]').value = '';
     showStats(0);
   } else if (value === 'showall') {
+    // Show all features
     document.querySelector('input[type="search"]').value = '.*';
     filter('Nom', '.*');
   } else if (value === 'center') {
+    // Center on search
     if (document.querySelector('input[type="search"]').value) {
       mapAPI.setCenter({ layerId: 10, zoom: 16, offsetZoom: -0.5 });
     } else {
