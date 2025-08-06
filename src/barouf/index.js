@@ -66,15 +66,16 @@ function initStats() {
     showStats(0)
     // Create main links
     const tab = {}
+    const keep = /\b(VIN)\b/
     const remove = ['CAFE', 'SARL', 'TABAC', 'BISTROT', 'BAR', 'BRASSERIE', 
       'RESTAURANT', 'PUB', 'SNACK', 'PIZZERIA', 'TRAITEUR', 'BISTRO', 'BISTROT', 'EURL', 
       'COMPTOIR', 'COFFEE', 'HOTEL', 'L\'HOTEL', 'BUVETTE', 'RELAIS', 'AUBERGE', 'L\'AUBERGE', 
-      'CAVE', 'MAISON', 'PIZZA', 'TAVERNE', 'CLUB', 'DEUX', 'FOYER', 'TABLE', 'CASA', 'COMITE', 
+      'CAVE', 'MAISON', 'PIZZA', 'TAVERNE', 'CLUB', 'FOYER', 'TABLE', 'CASA', 'COMITE', 
       'ASSOCIATION', 'INDIVISION', 'RESTAURATION', 'FETES', 'PRESSE', 'LOUNGE', 'SOCIETE', 'SASU',
       'AMICALE'];
     features.forEach(feature => {
       feature.properties.Nom.split(/ |-|,/).forEach(word => {
-        if (word.length > 3 && remove.indexOf(word) === -1) {
+        if (keep.test(word) || (word.length > 3 && remove.indexOf(word) === -1)) {
           if (!tab[word]) {
             tab[word] = 0;
           }
@@ -100,6 +101,17 @@ function initStats() {
       'SAINTE?S?': [ 'SAINT', 'SAINTS', 'SAINTE', 'SAINTES' ],
       'MOULINS?': [ 'MOULIN', 'MOULINS' ],
       'VILLE': [],
+      'VINS?': [ 'VIN', 'VINS' ],
+      'VIE(UX|U|ILLES?)': [ 'VIEUX', 'VIEU', 'VIELLE', 'VIELLES' ],
+      '(TROIS|3)': [ '3', 'TROIS' ],
+      '(DEUX|2)': [ '2', 'DEUX' ],
+      'ROUGES?': [ 'ROUGE', 'ROUGES' ],
+      'ROSES?': [ 'ROSE', 'ROSES'],
+      'BIERES?': [ 'BIERE', 'BIERES' ],
+      'BLEUE?S?': [ 'BLEU', 'BLEUS', 'BLEUE', 'BLEUES'],
+      'GERMAINE?': [ 'GERMAINE', 'GERMAIN'],
+      'BOUCHONS?': [ 'BOUCHON', 'BOUCHONS' ],
+      'CELTI(C|QUE)': [ 'CELTIC', 'CELTIQUE' ],
       'JEAN BART': [ 'BART' ]
     }
     Object.keys(cleanup).forEach(k => {
@@ -117,7 +129,7 @@ function initStats() {
     let links = '';
     for (let i=0; i<100; i++) {
       links += `<a href="#" class="link" data-what="${keys[i]}" data-nb="${tab[keys[i]]}" aria-label="rechercher...">`
-        + keys[i].replace(/.\?/g,'').replace(/\((.)[^\)]*\)/g,'$1')
+        + keys[i].replace(/.\?/g,'').replace(/\(([^|]*)[^\)]*\)/g,'$1')
         +`</a> - `;
     }
     linkDiv = document.querySelector('aside .links');
@@ -131,6 +143,12 @@ function initStats() {
       })
     })  
     showFeature([])
+    const hash = location.hash.replace(/^#/, '').replace(/%20/g, ' ');
+    if (hash) {
+      // If there is a hash, filter by it
+      document.querySelector('input[type="search"]').value = hash;
+      filter('Nom', hash)
+    }
   })
 }
 
@@ -145,6 +163,8 @@ function filter(what, value) {
     op: 'regexp',
     val: value,
   }
+  // location
+  location.hash = (value === '.*' ? '' : value);
   // Filter feature
   mapAPI.getFeatures(filt, features => {
     mapAPI.addLayerFeatures({ 
@@ -192,6 +212,7 @@ document.querySelector('input[type="search"]').addEventListener('change', e => {
   if (value) {
     filter('Nom', value);
   } else {
+    location.hash = '';
     showStats(0);
   }
 })
@@ -208,6 +229,7 @@ document.querySelector('header select').addEventListener('change', e => {
   if (value === 'show') {
     // Show game
     document.querySelector('input[type="search"]').value = '';
+    location.hash = '';
     showStats(0);
   } else if (value === 'showall') {
     // Show all features
