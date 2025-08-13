@@ -3,6 +3,13 @@ import { toKMString, getNearest, getDMS, getHMS } from './utils.js';
 
 import "./cestou.css"
 
+// Info dialog
+const dlog = document.querySelector('dialog')
+dlog.showModal();
+dlog.querySelector('button').addEventListener('click', () => {
+  dlog.close();
+  doGame();
+})
 
 let mapAPI1, mapAPI2;
 let layers = [];
@@ -38,7 +45,7 @@ MapIFrameAPI.ready('map1', function(api) {
   // Get features
   mapAPI1.getFeatures({ layerId: 18 }, features => {
     gameFeatures = features;
-    doGame();
+    if (!dlog.open) setTimeout(doGame, 1000);
   });
   // Style
   mapAPI1.layout({ css: `
