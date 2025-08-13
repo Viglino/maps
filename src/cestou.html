@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>C'est où ?</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Maps" />
+  <meta name="keywords" content="" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@viglino" />
+  <meta name="twitter:creator" content="@viglino" />
+  <meta name="twitter:title" content="SHOM - Carte ancienne Ouessant" />
+  <meta name="twitter:description" content="Carte ancienne de la minute 'Ouessant, Le Four, Les Pierres Noires'" />
+  <meta name="twitter:image" content="https://viglino.github.io/maps/maps/molene/9_4_10bis_7s.jpg" />
+
+  <link rel="icon" type="image/png" href="./barouf/logo.jpg">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
+  <link rel="apple-touch-icon" href="./barouf/logo.jpg">
+  <link rel="apple-touch-startup-image" href="./barouf/logo.jpg">
+
+  <meta name="format-detection" content="telephone=no"> 
+  <meta name="msapplication-tap-highlight" content="no">   
+
+  <!-- API -->
+  <script type="text/javascript" src="https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js"></script>
+
+</head>
+<body data-game>
+  <header>
+    <h1>C'est où ? 🎲</h1>
+  </header>
+  <main>
+    <aside>
+      <p>C'est<br/>où ?</p>
+      <iframe id="map1" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
+      <div class="indice">
+        <span id="timer"></span>
+        <button id="indice1" title="un indice ?"></button>
+        <button id="indice2" title="un indice ?"></button>
+        <button id="indice3" title="un indice ?"></button>
+        <button id="indice4" title="un indice ?"></button>
+      </div>
+    </aside>
+    <section>
+      <p>???</p>
+      <iframe id="map2" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
+      <button>C'est ici !</button>
+      <div class="result"></div>
+    </section>
+  </main>
+  <footer>
+  </footer>
+
+  <script type="module" src="./cestou/index.js"></script>
+</body>
+</html>

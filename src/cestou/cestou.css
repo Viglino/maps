@@ -1,0 +1,168 @@
+html, body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Trebuchet MS', sans-serif;
+  background-color: #f1f2f6;
+  color: #333;
+}
+h1 {
+  text-align: right;
+  color: #fff;
+  margin: 0;
+
+}
+header {
+  padding: 0 2em;
+  z-index: 1;
+  display: block;
+  background-color: #000;
+}
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #000;
+}
+footer {
+  display: flex;
+  text-align: right;
+  padding: 0.5em 2em;
+  background-color: #000;
+  color: #fff;
+  font-size: min(1em, 3vw, 2vh);
+}
+
+iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+main aside {
+  z-index: 1;
+  border: 0.5em solid #000;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0.5em;
+}
+main aside iframe {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+main section {
+  position: relative;
+  overflow: hidden;
+  margin-left: 2em;
+  width: calc(100% - 2em);
+  height: 100%;
+}
+main section button{
+  position: absolute;
+  bottom: 1em;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #eee;
+  border: 2px solid #000;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 1em;
+  display: none;
+  cursor: pointer;
+}
+[data-game] main section button {
+  display: block;
+}
+[data-game] main section button:hover {
+  box-shadow: 0 0 5px 1px #08f;
+  border-color: #08f;
+}
+
+main aside .indice {
+  position: relative;
+  top: -0.75em;
+  padding: 0 1em;
+}
+main aside .indice button {
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  font-size: 1em;
+  padding: 0;
+  border: 0;
+  box-shadow: 1px 1px 5px 2px #000;
+  cursor: pointer;
+}
+main aside .indice button:hover {
+  box-shadow: 1px 1px 5px 2px #08f;
+}
+main aside .indice button:before {
+  content: "🗝️";
+  border: 0;
+}
+
+main .result {
+  position: absolute;
+  background-color: red;
+  color: #fff;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  padding: 0.3em 0.5em;
+  transform: translate(-50%, -50%) scaleX(0.8);
+  border-radius: 3px;
+  font-size: 2em;
+}
+
+main section:before,
+main section:after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0%;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+main section:after {
+  top: 0%;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 100%;
+}
+
+main > * > p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 4em;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 2px #000, -2px 2px 2px #000, -2px -2px 2px #000, 2px -2px 2px #000;
+  animation: blinker 1s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+[data-game] main > * > p {
+  display: none;
+}
+
+@keyframes blinker {
+  0% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.1) ; }
+  50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1) ; }
+  100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.1) ; }
+}
