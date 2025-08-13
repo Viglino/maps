@@ -73,9 +73,36 @@ function getNearest(pt, features) {
   let pos = 0;
   features.forEach((f, i) => {
     const di = getDistance(pt, getCenter(f.geometry))
-    if (di<d) pos = i;
+    if (di < d) {
+      pos = i;
+      d = di;
+    }
   })
   return pos
 }
 
-export { getExtent, getCenter, getDistance, toKMString, getNearest };
+/** Convert coords to degre
+ */
+function convertDDToDMS(D, lng) {
+  const dir = D < 0 ? (lng ? "O" : "S") : lng ? "E" : "N"
+  const deg = 0 | (D < 0 ? (D = -D) : D)
+  const min = 0 | (((D += 1e-9) % 1) * 60)
+  const sec = (0 | (((D * 60) % 1) * 6000)) / 100
+  return deg + '° ' + (min < 10 ?  '0':'') + min + '\' ' + (sec<10 ? '0':'') + sec.toFixed(2) + '" ' + dir
+}
+
+
+function getDMS(pt) {
+  const lon = convertDDToDMS(pt[0], true)
+  const lat = convertDDToDMS(pt[1])
+  return lon + '<br/>' + lat
+}
+
+function getHMS(t) {
+  t /= 1000
+  const mn = Math.trunc(t/60)
+  const s = t - mn*60
+  return mn + ' mn ' + (s<10 ? '0':'') + s.toFixed(0) +' s'
+}
+
+export { getExtent, getCenter, getDistance, toKMString, getNearest, getDMS, getHMS };

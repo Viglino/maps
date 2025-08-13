@@ -34,19 +34,24 @@
   </header>
   <main>
     <aside>
+      <h1></h1>
       <p>C'est<br/>où ?</p>
-      <iframe id="map1" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
+      <iframe id="map1" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="clipboard-read; clipboard-write"></iframe>
       <div class="indice">
-        <span id="timer"></span>
         <button id="indice1" title="un indice ?"></button>
         <button id="indice2" title="un indice ?"></button>
         <button id="indice3" title="un indice ?"></button>
         <button id="indice4" title="un indice ?"></button>
+        <span class="timer"></span>
       </div>
     </aside>
     <section>
       <p>???</p>
-      <iframe id="map2" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
+      <span class="coords"></span>
+      <iframe id="map2" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="clipboard-read; clipboard-write"></iframe>
+      <!--
+      <iframe id="map2" src="https://macarte.ign.fr/carte/0GcYhu/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
+      -->
       <button>C'est ici !</button>
       <div class="result"></div>
     </section>

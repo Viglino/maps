@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 html, body {
   display: flex;
   flex-direction: column;
@@ -13,7 +15,6 @@ h1 {
   text-align: right;
   color: #fff;
   margin: 0;
-
 }
 header {
   padding: 0 2em;
@@ -51,6 +52,11 @@ main aside {
   top: 0;
   left: 0;
   margin: 0.5em;
+  border-radius: 5px;
+}
+main aside:hover {
+  border-style: outset;
+  box-shadow: 0 0 10px 5px #fff;
 }
 main aside iframe {
   width: 100%;
@@ -110,6 +116,31 @@ main aside .indice button:before {
   content: "🗝️";
   border: 0;
 }
+main aside h1 {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  text-shadow: 0 0 5px #000;
+}
+main section .coords {
+  color: #000;
+  pointer-events: none;
+  text-align: right;
+  transform-origin: 0 0;
+  margin: .5em .8em;
+  font-family: Roboto Mono, monospace;
+  font-size: .9em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: scaleX(.8);
+  background: rgba(255, 255, 255, 0.3);
+  padding: 0.1em 0.5em;
+  border-radius: 5px;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff;
+  font-weight: bold;
+}
 
 main .result {
   position: absolute;
@@ -123,7 +154,7 @@ main .result {
   border-radius: 3px;
   font-size: 2em;
 }
-
+/*
 main section:before,
 main section:after {
   content: '';
@@ -140,6 +171,18 @@ main section:after {
   left: calc(50% - 1px);
   width: 2px;
   height: 100%;
+}
+*/
+
+main aside .timer {
+  background-color: #fff;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+  box-shadow: 1px 1px 5px 2px #000;
+}
+main aside .timer:before {
+  content: '⏲️ ';
 }
 
 main > * > p {
