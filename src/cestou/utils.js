@@ -105,4 +105,26 @@ function getHMS(t) {
   return mn + ' mn ' + (s<10 ? '0':'') + s.toFixed(0) +' s'
 }
 
-export { getExtent, getCenter, getDistance, toKMString, getNearest, getDMS, getHMS };
+
+function createElement(tag, options) {
+  const elt = document.createElement(tag.toLowerCase())
+  Object.keys(options).forEach(k => {
+    switch(k) {
+      case 'parent': {
+        options.parent.appendChild(elt)
+        break;
+      }
+      case 'html': {
+        elt.innerHTML = options.html
+        break;
+      }
+      default: {
+        elt[k] = options[k]
+        break;
+      }
+    }
+  })
+  return elt;
+}
+
+export { getExtent, getCenter, getDistance, toKMString, getNearest, getDMS, getHMS, createElement };

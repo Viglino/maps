@@ -16,6 +16,12 @@ dialog::backdrop {
 }
 dialog {
   padding: 1rem;
+  max-width: calc(100% - 2em);
+}
+dialog.intro {
+  transform: translateX(3em);
+  max-width: calc(100% - 7em);
+  box-sizing: border-box;
 }
 dialog h2 {
   margin: -1rem -1rem 1em;
@@ -31,6 +37,8 @@ dialog button {
   font-size: 1em;
   padding: 0.5em 1em;
   border-radius: 5px;
+  margin: auto;
+  display: block;
 }
 
 
@@ -86,6 +94,7 @@ main aside iframe {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  user-select: none;
 }
 main section {
   position: relative;
@@ -94,7 +103,7 @@ main section {
   width: calc(100% - 6em);
   height: 100%;
 }
-main section button{
+main section > button{
   position: absolute;
   bottom: 1em;
   left: 50%;
@@ -108,20 +117,47 @@ main section button{
   border-radius: 1em;
   display: none;
   cursor: pointer;
+  animation: pulse 2s linear infinite;
 }
-[data-game] main section button {
+[data-game="searching"] main section button.check {
   display: block;
 }
-[data-game] main section button:hover {
-  box-shadow: 0 0 5px 1px #08f;
-  border-color: #08f;
+[data-game="finish"] main section button.next {
+  display: block;
+}
+main section button:hover {
+  box-shadow: 0 0 5px 1px #08f!important;
+  border-color: #08f!important;
 }
 
+main section > button:before,
+main section > button:after {
+  content: "";
+  pointer-events: none;
+  background-color: #0000;
+  background-image: linear-gradient(0deg, #0000 4px, #000 4px 6px, #0000 6px), 
+    linear-gradient(90deg, #0000 20px, #000 20px 22px, #0000 22px);
+  background-position: center left;
+  background-size: 60px 10px;
+  width: 30px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+[data-game] main section > button:before {
+  left: 100%;
+}
+[data-game] main section > button:after {
+  transform: translateY(-50%) scaleX(-1);
+  right: 100%;
+}
 main aside .indice {
   position: relative;
   top: -0.75em;
   padding: 0 1em;
 }
+main .controls button,
 main aside .indice button {
   border-radius: 50%;
   width: 2em;
@@ -133,6 +169,10 @@ main aside .indice button {
   box-shadow: 1px 1px 5px 2px #000;
   cursor: pointer;
 }
+main aside .indice button.none {
+  display: none;
+}
+
 main aside .indice button:hover {
   box-shadow: 1px 1px 5px 2px #08f;
 }
@@ -140,14 +180,23 @@ main aside .indice button:before {
   content: "🗝️";
   border: 0;
 }
-main aside h1 {
+main aside .indice button.img:before {
+  content: "📸";
+}
+main aside .indice button.zoom:before,
+main aside .indice button.dezoom:before {
+  content: "🔎";
+}
+main aside .indice button.layer:before {
+  content: "📁";
+}main aside h1 {
   position: absolute;
   width: 100%;
   text-align: center;
   z-index: 1;
   text-shadow: 0 0 5px #000;
 }
-main section .coords {
+main section span.coords {
   color: #000;
   pointer-events: none;
   text-align: right;
@@ -165,19 +214,46 @@ main section .coords {
   text-shadow: 0 0 3px #fff, 0 0 3px #fff;
   font-weight: bold;
 }
+[data-coords="false"] main section span.coords {
+  display: none;
+}
+
+main section .controls {
+  position: fixed;
+  bottom: 1em;
+  left: 0;
+  width: 6em;
+  display: block;
+  text-align: center;
+}
+main section .controls button {
+  display: block;
+  margin: 0.5em auto;
+}
+main section .controls button span {
+  transform: scale(1.5);
+  display: block;
+  font-family: Georgia, Garamond, serif;
+  font-weight: bold;
+  color: #136;
+}
+
 
 main .result {
   position: absolute;
   background-color: red;
   color: #fff;
   z-index: 1;
-  top: 50%;
+  bottom: 2em;
   left: 50%;
   width: max-content;
   padding: 0.3em 0.5em;
-  transform: translate(-50%, -50%) scaleX(0.8);
+  transform: translateX(-50%) scaleX(0.8);
   border-radius: 3px;
   font-size: 2em;
+}
+main .result:empty {
+  display: none;
 }
 /*
 main section:before,
@@ -229,8 +305,43 @@ main > * > p {
   display: none;
 }
 
+dialog.indice form > div {
+  margin: 0.5em;
+}
+dialog.indice p.img {
+  margin: auto;
+  text-align: right;
+}
+dialog.indice img {
+  max-width: 100%;
+}
+dialog.indice a {
+  font-weight: bold;
+  color: #333;
+}
+
+
 @keyframes blinker {
   0% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.1) ; }
   50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1) ; }
   100% { opacity: 1.0; transform: translate(-50%, -50%) scale(1.1) ; }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 5px 1px #08f;
+    border-color: #08f;
+  }
+  25% { 
+    box-shadow: 0 0 5px 1px transparent;
+    border-color: transparent;
+  }
+  75% { 
+    box-shadow: 0 0 5px 1px transparent;
+    border-color: transparent;
+  }
+  100% { 
+    box-shadow: 0 0 5px 1px #08f;
+    border-color: #08f;
+ }
 }

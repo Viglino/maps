@@ -1,12 +1,12 @@
 import { getExtent, getCenter, getDistance } from './utils.js'
-import { toKMString, getNearest, getDMS, getHMS } from './utils.js';
+import { toKMString, getNearest, getDMS, getHMS, createElement } from './utils.js';
 
 import "./cestou.css"
 
 // Info dialog
-const dlog = document.querySelector('dialog')
+const dlog = document.querySelector('dialog.intro')
 dlog.showModal();
-dlog.querySelector('button').addEventListener('click', () => {
+dlog.querySelector('button').addEventListener('click', e => {
   dlog.close();
   doGame();
 })
@@ -35,7 +35,7 @@ MapIFrameAPI.ready('map1', function(api) {
     layers = l;
     // Hide all layers
     l.forEach(layer => {
-      mapAPI1.setLayer({ id: layer.id, visible: false });
+      mapAPI1.setLayer({ id: layer.id, visible: layer.id === 3 });
     });
     // hide controls
     ['zoom', 'mousePosition', 'layerSwitcher', 'profil', 'printDlg', 'legend', 'searchBar', 'permalink', 'locate'].forEach(id => {
@@ -64,23 +64,32 @@ MapIFrameAPI.ready('map1', function(api) {
 MapIFrameAPI.ready('map2', function(api) {
   mapAPI2 = api;
   window.mapAPI2 = mapAPI2;
+  // Hide game layers
   [2,14,18].forEach(l => {
     mapAPI2.setLayer({ id: l, displayInLayerSwitcher: false, visible: false });
   })
+  // Clear features
   mapAPI2.addLayerFeatures({ id: 2, features: [], clear: true });
-    mapAPI2.getLayers(l => {
+  // Hide layers
+  mapAPI2.getLayers(l => {
     layers = l;
     // Hide layers ?
     l.forEach(layer => {
       mapAPI2.setLayer({ id: layer.id, visible: layer.id < 4 });
     });
   })
+  if (!debug) {
+    mapAPI2.setCenter({ extent: [-4.8, 41.15, 9.8, 51.23] })
+  }
   mapAPI2.on('move', c => {
     document.querySelector('section .coords').innerHTML = getDMS(c.center)
   })
   mapAPI2.layout({ css: `
     .ol-control.ol-search {
         left: 300px;
+    }
+    .map .ol-control.ol-permalink {
+      display: none;
     }
     .ol-overlaycontainer-stopevent:before,
     .ol-overlaycontainer-stopevent:after {
@@ -113,10 +122,15 @@ MapIFrameAPI.ready('map2', function(api) {
  */
 function doGame() {
   delete document.body.dataset.game;
+  resultDiv.innerHTML = '';
   
   if (mapAPI2) {
     mapAPI2.addLayerFeatures({ id: 2, features: [], clear: true });
     mapAPI2.popup();
+    layers.forEach(layer => {
+      mapAPI2.setLayer({ id: layer.id, visible: layer.id < 4 });
+    });
+
   }
 
   // end
@@ -139,13 +153,41 @@ function doGame() {
     game.start = Date.now();
   }, 5000)
 
+  // Clue
+  document.querySelectorAll('.indice button').forEach((b, i) => {
+    const indice = (currentFeature.properties['Indice ' + (i+1)] || 'none').split(':')
+    const what = indice[0]
+    b.className = what;
+    b.dataset.info = '';
+    b.dataset.img = false;
+    switch(what) {
+      case 'none': {
+        break;
+      }
+      case 'zoom':
+      case 'dezoom':
+      case 'layer':
+      case 'img': {
+        indice.shift();
+        b.dataset.info = indice.join(':')
+        b.dataset.type =  what;
+        break;
+      }
+      default: {
+        b.dataset.info = indice.join(':');
+        break;
+      }
+    }
+  })
   // Show
   document.getElementById('map1').style.filter = currentFeature.properties.filter
   layers.forEach(layer => {
     mapAPI1.setLayer({ id: layer.id, visible: false });
   });
   mapAPI1.setLayer({ id: currentFeature.properties.layer, visible: true });
-  mapAPI1.setCenter({ extent: getExtent(currentFeature.geometry) });
+  mapAPI1.setCenter({ extent: getExtent(currentFeature.geometry) }, () => {
+    mapAPI1.getZoom(z => currentFeature.zoom = z)
+  });
   showCurrent()
 }
 
@@ -158,14 +200,16 @@ function showCurrent(ori) {
       rotation: parseInt(ori || currentFeature.properties.orientation || 0) * Math.PI / 180
     })
     setTimeout(() => {
-      document.body.dataset.game = '';
-    }, 5000)
+      document.body.dataset.game = 'searching';
+    }, 4000)
   })
 }
 
 /** Check user position
  */
 function checkSolution() {
+  document.body.dataset.game = 'finish'
+  mapAPI2.setLayer({ id: currentFeature.properties.layer, visible: true })
   mapAPI2.getCenter(c => {
     const curPt = getCenter(currentFeature.geometry);
     const dist = getDistance(c, curPt);
@@ -184,6 +228,8 @@ function checkSolution() {
       clear: true
     });
     mapAPI2.popup({ position: curPt, content: 'c\'est ici !' });
+    const zoom = Math.min(19-Math.log(dist/1000), currentFeature.zoom, 18)
+    mapAPI2.moveTo({ destination: curPt, zoom: zoom, type: 'flyto' });
     // Result
     let step = 0;
     let s = 33
@@ -213,8 +259,86 @@ function showTime() {
 }
 
 /* Listeners */
-document.querySelector('main section button').addEventListener('click', checkSolution);
+document.querySelector('main section button.check').addEventListener('click', checkSolution);
+document.querySelector('main section button.next').addEventListener('click', doGame);
+document.querySelector('main section button.coords').addEventListener('click', () => {
+  document.body.dataset.coords = document.body.dataset.coords !== 'true'
+});
 
+/* Show clue */
+const dlgIndice = document.querySelector('dialog.indice')
+dlgIndice.querySelector('button').addEventListener('click', () => {
+  dlgIndice.close();
+})
+document.querySelectorAll('div.indice button').forEach(b => {
+  b.addEventListener('click', () => {
+    console.log(currentFeature)
+    const div = dlgIndice.querySelector('div')
+    div.innerHTML = '';
+    switch (b.dataset.type) {
+      case 'img': {
+        createElement('IMG', {
+          src: currentFeature.properties.img,
+          parent: div
+        })
+        createElement('P', {
+          html: currentFeature.properties.copyimg,
+          className: 'img',
+          parent: div
+        })
+        break;
+      }
+      case 'zoom':
+      case 'dezoom': {
+        const bt = createElement('BUTTON', {
+          html: 'Changer de zoom',
+          parent: div
+        })
+        bt.addEventListener('click', () => {
+          mapAPI1.getZoom(z => {
+            console.log(z, currentFeature.zoom)
+            const center = getCenter(currentFeature.geometry);
+            if (z < currentFeature.zoom -0.5) {
+              mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom, type: 'moveTo' })
+            } else {
+              mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom -2, type: 'moveTo' })
+            }
+          })
+          dlgIndice.close()
+        })
+        break;
+      }
+      case 'layer': {
+        let layer = {}
+        layers.forEach(l => {
+          if (l.id == currentFeature.properties.layer) {
+            layer = l
+          }
+        })
+        const a = createElement('A', {
+          html: 'Afficher la couche : ' + layer.title,
+          href: '#',
+          parent: div
+        })
+        a.addEventListener('click', e => {
+          mapAPI2.setLayer({ id: layer.id, visible: true })
+          e.preventDefault();
+          e.stopPropagation();
+          dlgIndice.close();
+        })
+        break;
+      }
+      default: {
+        createElement('P', {
+          html: '💡 ' + b.dataset.info,
+          parent: div
+        })
+        break;
+      }      
+    }
+    dlgIndice.showModal()
+  })
+})
 
 /* debug */
 window.doGame = doGame

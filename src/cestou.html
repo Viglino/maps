@@ -36,7 +36,7 @@
     <aside>
       <h1></h1>
       <p>C'est<br/>où ?</p>
-      <iframe id="map1" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="clipboard-read; clipboard-write"></iframe>
+      <iframe id="map1" title="C'est où ?" src="https://macarte.ign.fr/carte/IXCegq/GeoGame" allow="clipboard-read; clipboard-write"></iframe>
       <div class="indice">
         <button id="indice1" title="un indice ?"></button>
         <button id="indice2" title="un indice ?"></button>
@@ -52,20 +52,30 @@
       <!--
       <iframe id="map2" src="https://macarte.ign.fr/carte/0GcYhu/GeoGame" allow="geolocation clipboard-read; clipboard-write"></iframe>
       -->
-      <button>C'est ici !</button>
+      <button class="check">C'est ici !</button>
+      <button class="next">Un autre !</button>
       <div class="result"></div>
+      <div class="controls">
+        <button class="coords">🌐</button>
+        <button class="info"><span>i</span></button>
+      </div>
     </section>
   </main>
   <footer>
   </footer>
 
-  <dialog>
+  <dialog class="indice">
+    <form>
+      <h2>Indice</h2>
+      <div></div>
+      <button type="button"> Fermer </button>
+    </form>
+  </dialog>
+  <dialog class="intro">
     <form>
       <h2>C'est où ?</h2>
-      <p>
-        
-      </p>
-      <button>🎲 Commencer !</button>
+      <p></p>
+      <button type="button">🎲 Commencer !</button>
     </form>
   </dialog>
 
