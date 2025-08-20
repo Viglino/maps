@@ -314,6 +314,7 @@ dialog.indice p.img {
 }
 dialog.indice img {
   max-width: 100%;
+  max-height: calc(100vh - 20em);
 }
 dialog.indice a {
   font-weight: bold;
