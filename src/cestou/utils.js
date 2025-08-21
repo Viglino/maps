@@ -58,14 +58,14 @@ function getDistance(coord1, coord2) {
 /** Get km string
  * @param {number} dist - Distance in meters
  */
-function toKMString(dist) {
+function toKMString(dist, dec) {
+  if (dec === undefined) dec = 2;
   // Convert distance to kilometers
-  if (dist > 1000) {
-    dist = Math.round(dist / 100) / 10 + ' km'; // arrondi à 0.1 km
+  if (dist > 10000) {
+    return (dist / 1000).toLocaleString(undefined, { maximumFractionDigits: dec}) + ' km';
   } else {
-    dist = Math.round(dist) + ' m'; // arrondi à l'entier
+    return dist.toLocaleString() + ' m';
   }
-  return dist
 }
 
 function getNearest(pt, features) {
@@ -98,12 +98,17 @@ function getDMS(pt) {
   return lon + '<br/>' + lat
 }
 
-function getHMS(t) {
+function getHMS(t, short) {
   t /= 1000
   const mn = Math.trunc(t/60)
   const s = t - mn*60
-  return mn + ' mn ' + (s<10 ? '0':'') + s.toFixed(0) +' s'
+  if (short) {
+    return mn + '\'' + (s<10 ? '0':'') + s.toFixed(0) +'"'
+  } else {
+    return mn + ' mn ' + (s<10 ? '0':'') + s.toFixed(0) +' s'
+  }
 }
+
 
 
 function createElement(tag, options) {
