@@ -15,11 +15,7 @@ dlog.querySelector('button').addEventListener('click', e => {
 let layers = [];
 let currentFeature = null;
 
-/*
-  if (!game.debug) {
-    game.mapAPI2.setCenter({ extent: [-4.8, 41.15, 9.8, 51.23] })
-  }
-*/
+
 class Game {
   constructor() {
     this.running = false;
@@ -36,6 +32,9 @@ class Game {
   ready() {
     console.log('Game ready');
     document.body.dataset.game = 'ready';
+    if (!game.debug) {
+      game.mapAPI2.setCenter({ extent: [-4.8, 41.15, 9.8, 51.23] })
+    }
   }
   start() {
     this.running = true;
@@ -87,6 +86,7 @@ function doGame() {
   if (game.debug) {
     r = getNearest(game.startPosition, game.features)
   }
+  console.log('ok')
   currentFeature = game.features[r];
   game.features.splice(r, 1);
 
@@ -122,11 +122,11 @@ function doGame() {
   // Show
   document.getElementById('map1').style.filter = currentFeature.properties.filter
   layers.forEach(layer => {
-    game.mapAPI2.setLayer({ id: layer.id, visible: false });
+    game.mapAPI1.setLayer({ id: layer.id, visible: false });
   });
-  game.mapAPI2.setLayer({ id: currentFeature.properties.layer, visible: true });
-  game.mapAPI2.setCenter({ extent: getExtent(currentFeature.geometry) }, () => {
-    game.mapAPI2.getZoom(z => currentFeature.zoom = z)
+  game.mapAPI1.setLayer({ id: currentFeature.properties.layer, visible: true });
+  game.mapAPI1.setCenter({ extent: getExtent(currentFeature.geometry) }, () => {
+    game.mapAPI1.getZoom(z => currentFeature.zoom = z)
   });
   showCurrent()
 }
@@ -134,8 +134,8 @@ function doGame() {
 /** Show current position (with rotation) */
 function showCurrent(ori) {
   document.querySelector('main aside h1').innerText = currentFeature.properties.Titre || ''
-  game.mapAPI2.getCenter(center => {
-    game.mapAPI2.moveTo({
+  game.mapAPI1.getCenter(center => {
+    game.mapAPI1.moveTo({
       destination: center, 
       rotation: parseInt(ori || currentFeature.properties.orientation || 0) * Math.PI / 180
     })
@@ -258,13 +258,13 @@ document.querySelectorAll('div.indice button').forEach(b => {
           parent: div
         })
         bt.addEventListener('click', () => {
-          game.mapAPI2.getZoom(z => {
+          game.mapAPI1.getZoom(z => {
             console.log(z, currentFeature.zoom)
             const center = getCenter(currentFeature.geometry);
             if (z < currentFeature.zoom -0.5) {
-              game.mapAPI2.moveTo({ destination: center, zoom: currentFeature.zoom, type: 'moveTo' })
+              game.mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom, type: 'moveTo' })
             } else {
-              game.mapAPI2.moveTo({ destination: center, zoom: currentFeature.zoom -2, type: 'moveTo' })
+              game.mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom -2, type: 'moveTo' })
             }
           })
           dlgIndice.close()

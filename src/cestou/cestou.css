@@ -24,10 +24,12 @@ dialog.intro {
   box-sizing: border-box;
 }
 dialog.intro button{
-  display: none;
+  pointer-events: none;
+  opacity: 0.2;
 }
 [data-game="ready"] dialog.intro button {
-  display: block;
+  pointer-events: all;
+  opacity: 1;
 }
 dialog h2 {
   margin: -1rem -1rem 1em;
