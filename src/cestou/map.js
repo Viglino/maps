@@ -51,7 +51,7 @@ function getMapAPI(game) {
     mapAPI2.addLayerFeatures({ id: 2, features: [], clear: true });
     // Hide layers
     mapAPI2.getLayers(l => {
-      getMapAPI.layers = l;
+      game.layers = l;
       // Hide layers ?
       l.forEach(layer => {
         mapAPI2.setLayer({ id: layer.id, visible: layer.id < 4 });

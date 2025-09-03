@@ -1,3 +1,5 @@
 import game from './game.js';
 
-console.log(game)
+/* debug */
+window.game = game;
+/**/

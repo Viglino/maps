@@ -12,9 +12,7 @@ dlog.querySelector('button').addEventListener('click', e => {
   doGame();
 })
 
-let layers = [];
 let currentFeature = null;
-
 
 class Game {
   constructor() {
@@ -72,12 +70,14 @@ function doGame() {
   
   game.mapAPI2.addLayerFeatures({ id: 2, features: [], clear: true });
   game.mapAPI2.popup();
-  layers.forEach(layer => {
+  game.layers.forEach(layer => {
     game.mapAPI2.setLayer({ id: layer.id, visible: layer.id < 4 });
   });
 
   // end
   if (!game.features.length) {
+    document.body.querySelector('dialog.final p').innerText = 'Vous avez terminé la série en ' + getHMS(game.totalTime) + ' !'
+    document.body.querySelector('dialog.final').showModal()
     return
   }
 
@@ -86,7 +86,6 @@ function doGame() {
   if (game.debug) {
     r = getNearest(game.startPosition, game.features)
   }
-  console.log('ok')
   currentFeature = game.features[r];
   game.features.splice(r, 1);
 
@@ -121,10 +120,12 @@ function doGame() {
   })
   // Show
   document.getElementById('map1').style.filter = currentFeature.properties.filter
-  layers.forEach(layer => {
-    game.mapAPI1.setLayer({ id: layer.id, visible: false });
+  game.layers.forEach(layer => {
+    game.mapAPI1.setLayer({ 
+      id: layer.id, 
+      visible: layer.id == currentFeature.properties.layer 
+    });
   });
-  game.mapAPI1.setLayer({ id: currentFeature.properties.layer, visible: true });
   game.mapAPI1.setCenter({ extent: getExtent(currentFeature.geometry) }, () => {
     game.mapAPI1.getZoom(z => currentFeature.zoom = z)
   });
@@ -255,9 +256,12 @@ document.querySelectorAll('div.indice button').forEach(b => {
       case 'dezoom': {
         const bt = createElement('BUTTON', {
           html: 'Changer de zoom',
+          type: 'button',
           parent: div
         })
-        bt.addEventListener('click', () => {
+        bt.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
           game.mapAPI1.getZoom(z => {
             console.log(z, currentFeature.zoom)
             const center = getCenter(currentFeature.geometry);
@@ -273,7 +277,7 @@ document.querySelectorAll('div.indice button').forEach(b => {
       }
       case 'layer': {
         let layer = {}
-        layers.forEach(l => {
+        game.layers.forEach(l => {
           if (l.id == currentFeature.properties.layer) {
             layer = l
           }
