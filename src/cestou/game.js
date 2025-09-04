@@ -235,10 +235,8 @@ dlgIndice.querySelector('button').addEventListener('click', () => {
 })
 document.querySelectorAll('div.indice button').forEach(b => {
   b.addEventListener('click', () => {
-    console.log(currentFeature)
     const div = dlgIndice.querySelector('div')
     div.innerHTML = '';
-    console.log(b.dataset)
     switch (b.dataset.type) {
       case 'img': {
         createElement('IMG', {
@@ -254,26 +252,16 @@ document.querySelectorAll('div.indice button').forEach(b => {
       }
       case 'zoom':
       case 'dezoom': {
-        const bt = createElement('BUTTON', {
-          html: 'Changer de zoom',
-          type: 'button',
-          parent: div
-        })
-        bt.addEventListener('click', e => {
-          e.preventDefault();
-          e.stopPropagation();
-          game.mapAPI1.getZoom(z => {
-            console.log(z, currentFeature.zoom)
+        game.mapAPI1.getZoom(z => {
+          if (z > currentFeature.zoom -0.5) {
             const center = getCenter(currentFeature.geometry);
-            if (z < currentFeature.zoom -0.5) {
+            game.mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom -2, type: 'moveTo' })
+            setTimeout(() => {
               game.mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom, type: 'moveTo' })
-            } else {
-              game.mapAPI1.moveTo({ destination: center, zoom: currentFeature.zoom -2, type: 'moveTo' })
-            }
-          })
-          dlgIndice.close()
+            }, 3000)
+          }
         })
-        break;
+        return;
       }
       case 'layer': {
         let layer = {}
