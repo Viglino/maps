@@ -22,21 +22,74 @@ dialog.intro {
   transform: translateX(3em);
   max-width: calc(100% - 7em);
   box-sizing: border-box;
+  cursor: wait;
+}
+dialog.intro span {
+  background-color: #333;
+  color: #fff;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  margin: .5em .25em;
+  display: inline-block;
+  animation: 2s linear infinite pulse;
+}
+dialog.intro img {
+  height: 1.5em;
+  vertical-align: middle;
 }
 dialog.intro button{
   pointer-events: none;
   opacity: 0.2;
 }
+[data-game="ready"] dialog.intro {
+  cursor: default;
+}
 [data-game="ready"] dialog.intro button {
   pointer-events: all;
   opacity: 1;
+  cursor: pointer;
 }
+dialog.intro p,
+dialog.info p {
+  text-align: center;
+}
+dialog.info span {
+  vertical-align: middle;
+  background-image: linear-gradient(0deg, #444, #eee 66%, #fff 70%, #eee, #555);
+  border: 1px solid #333;
+  border-radius: 2px;
+  margin: 0 0 .25em;
+  padding: .25em .5em;
+  font-size: 1.25em;
+  font-weight: bold;
+  display: inline-block;
+  box-shadow: 1px 1px 3px #333;
+  text-shadow: 1px 1px 2px #eee;
+  color: #333;
+}
+dialog.intro a,
+dialog.info a {
+  color: #333;
+  font-weight: bold;
+}
+
+
 dialog h2 {
   margin: -1rem -1rem 1em;
   font-size: 1.5em;
   background-color: #333;
   color: #fff;
   padding: 0.5em;
+}
+dialog h2:before {
+  content: "";
+  background-image: url(./logo.svg);
+  background-size: 100% 100%;
+  filter: invert(1) contrast(1.5);
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+  margin: 0 0.5em -0.5em 0;
 }
 dialog button {
   color: #fff;
@@ -48,8 +101,6 @@ dialog button {
   margin: auto;
   display: block;
 }
-
-
 
 h1 {
   text-align: right;

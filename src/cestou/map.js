@@ -22,6 +22,10 @@ function getMapAPI(game) {
     // Get features
     mapAPI1.getFeatures({ layerId: 18 }, features => {
       game.features = features;
+      // ready
+      if (game.mapAPI2) {
+        game.ready();
+      }
     });
     // Style
     mapAPI1.layout({ css: `
@@ -33,10 +37,6 @@ function getMapAPI(game) {
         right: unset;
       }
     `})
-    // ready
-    if (game.mapAPI2) {
-      game.ready();
-    }
   })
 
   // Load MapIFrameAPI
@@ -108,7 +108,7 @@ function getMapAPI(game) {
       `
     });
     // ready
-    if (game.mapAPI1) {
+    if (game.mapAPI1 && game.features) {
       game.ready();
     }
   })

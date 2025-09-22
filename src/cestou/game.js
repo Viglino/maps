@@ -4,14 +4,23 @@ import getMapAPI from './map.js';
 
 import "./cestou.css"
 
-// Info dialog
+// Intro dialog
 const dlog = document.querySelector('dialog.intro')
 dlog.showModal();
 dlog.querySelector('button').addEventListener('click', e => {
   dlog.close();
   doGame();
 })
+// Info dialog
+const dinfo = document.querySelector('dialog.info')
+dinfo.querySelector('button').addEventListener('click', e => {
+  dinfo.close();
+})
+document.querySelector('main section button.info').addEventListener('click', e => {
+  dinfo.showModal();
+})
 
+// Current feature
 let currentFeature = null;
 
 class Game {
@@ -20,9 +29,13 @@ class Game {
     this.startDate = Date.now();
     this.endDate = null;
     this.time = 0;  
+    this.count = 0;
     this.totalTime = 0;
+    this.totalDist = 0;
     //
     this.debug = /debug/.test(location.hash)
+    //
+    this.lonlat = location.search.replace(/^\?lonlat=([0-9.]*),([0-9.]*).*/, '$1,$2').split(',').map(parseFloat)
     // 
     this.timerDiv = document.querySelector('main .timer');
     getMapAPI(this)
@@ -30,13 +43,20 @@ class Game {
   ready() {
     console.log('Game ready');
     document.body.dataset.game = 'ready';
-    if (!game.debug) {
-      game.mapAPI2.setCenter({ extent: [-4.8, 41.15, 9.8, 51.23] })
+    if (!this.debug) {
+      this.mapAPI2.setCenter({ extent: [-4.8, 41.15, 9.8, 51.23] })
     }
+    if (this.lonlat[0] && this.lonlat[1]) {
+      this.startPosition = this.lonlat;
+      this.debug = true;
+    }
+    dinfo.querySelector('.total').innerText = this.features.length;
+    this.setDistance(0);
   }
   start() {
     this.running = true;
     this.startDate = Date.now();
+    this.count++;
     setTimeout(() => {
       this.showTime()
       this.startDate = Date.now();
@@ -48,6 +68,12 @@ class Game {
     this.endDate = Date.now();
     this.time = this.endDate - this.startDate;
     this.totalTime += this.time;
+  }
+  setDistance(d) {
+    this.totalDist += d;
+    dinfo.querySelector('.found').innerText = this.count;
+    dinfo.querySelector('.time').innerText = getHMS(this.totalTime);
+    dinfo.querySelector('.dist').innerText = toKMString(this.totalDist);
   }
   showTime() {
     if (this.running) {
@@ -200,6 +226,7 @@ function checkSolution() {
       }],
       clear: true
     });
+    game.setDistance(dist);
     game.mapAPI2.popup({ position: curPt, content: 'c\'est ici !' });
     const zoom = Math.min(19-Math.log(dist/1000), currentFeature.zoom, 18)
     game.mapAPI2.moveTo({ destination: curPt, zoom: zoom, type: 'flyto' });
