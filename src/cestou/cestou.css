@@ -18,6 +18,10 @@ dialog {
   padding: 1rem;
   max-width: calc(100% - 2em);
 }
+dialog.info {
+  max-width: calc(100% -2em);
+  box-sizing: border-box;
+}
 dialog.intro {
   transform: translateX(3em);
   max-width: calc(100% - 7em);
@@ -49,10 +53,20 @@ dialog.intro button{
   opacity: 1;
   cursor: pointer;
 }
+dialog.intro b {
+  font-size: 2em;
+  color: #d22;
+  display: inline-block;
+  margin: 0 .1em .1em;
+  font-weight: bold;
+  vertical-align: middle;
+}
 dialog.intro p,
+dialog.final p,
 dialog.info p {
   text-align: center;
 }
+dialog.final span,
 dialog.info span {
   vertical-align: middle;
   background-image: linear-gradient(0deg, #444, #eee 66%, #fff 70%, #eee, #555);
@@ -71,8 +85,36 @@ dialog.intro a,
 dialog.info a {
   color: #333;
   font-weight: bold;
+  position: relative;
 }
-
+dialog.info a.question {
+  display: block;
+  margin: 1em auto;
+  width: fit-content;
+}
+dialog.info a.question:after {
+  content: "↗";
+  text-shadow: 2px 0px #fff, -2px -1px #fff;
+  margin-left: .5em;
+  line-height: .8em;
+  text-decoration: none;
+  z-index: 1;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.3em;
+  vertical-align: bottom;
+}
+dialog.info a.question:before {
+  content: "";
+  border: 2px solid;
+  width: 0.5em;
+  height: 0.5em;
+  line-height: 1em;
+  display: inline-block;
+  position: absolute;
+  right: 0.25em;
+  bottom: 0.1em;
+}
 
 dialog h2 {
   margin: -1rem -1rem 1em;

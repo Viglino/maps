@@ -17,6 +17,8 @@ dinfo.querySelector('button').addEventListener('click', e => {
   dinfo.close();
 })
 document.querySelector('main section button.info').addEventListener('click', e => {
+  const pt = getCenter(game.currentFeature.geometry)
+  dinfo.querySelector('.question').href = location.origin + location.pathname +'?lonlat=' + pt[0].toFixed(5) + ',' + pt[1].toFixed(5);
   dinfo.showModal();
 })
 
@@ -51,6 +53,7 @@ class Game {
       this.debug = true;
     }
     dinfo.querySelector('.total').innerText = this.features.length;
+    dlog.querySelector('b').innerText = this.features.length;
     this.setDistance(0);
   }
   start() {
@@ -102,7 +105,9 @@ function doGame() {
 
   // end
   if (!game.features.length) {
-    document.body.querySelector('dialog.final p').innerText = 'Vous avez terminé la série en ' + getHMS(game.totalTime) + ' !'
+    document.body.querySelector('dialog.final .time').innerText = getHMS(game.totalTime) 
+    document.body.querySelector('dialog.final .dist').innerText = toKMString(game.totalDist);
+
     document.body.querySelector('dialog.final').showModal()
     return
   }
@@ -112,7 +117,7 @@ function doGame() {
   if (game.debug) {
     r = getNearest(game.startPosition, game.features)
   }
-  currentFeature = game.features[r];
+  game.currentFeature = currentFeature = game.features[r];
   game.features.splice(r, 1);
 
   // Start
