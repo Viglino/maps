@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=fr xmlns=http://www.w3.org/1999/xhtml><link rel=stylesheet href=cestou.6f45f0fd.css><title>C'est où ?</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name=description content=Maps><meta name=keywords content><meta name=twitter:card content=summary_large_image><meta name=twitter:site content=@viglino><meta name=twitter:creator content=@viglino><meta name=twitter:title content="SHOM - Carte ancienne Ouessant"><meta name=twitter:description content="Carte ancienne de la minute 'Ouessant, Le Four, Les Pierres Noires'"><meta name=twitter:image content=https://viglino.github.io/maps/maps/molene/9_4_10bis_7s.jpg><link rel=icon type=image/png href=logo.43cb5abb.jpg><meta name=mobile-web-app-capable content=yes><meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=translucent-black><link rel=apple-touch-icon href=logo.43cb5abb.jpg><link rel=apple-touch-startup-image href=logo.43cb5abb.jpg><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><script src=https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js></script><body data-game>
+<!DOCTYPE html><html lang=fr xmlns=http://www.w3.org/1999/xhtml><link rel=stylesheet href=cestou.dfbf0bc0.css><title>C'est où ?</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name=description content=Maps><meta name=keywords content><meta name=twitter:card content=summary_large_image><meta name=twitter:site content=@viglino><meta name=twitter:creator content=@viglino><meta name=twitter:title content="C'est-où ?"><meta name=twitter:description content="Localisez les lieux à partir d'une photographie aérienne."><link rel=icon type=image/png href=logo.86cc585b.svg><meta name=mobile-web-app-capable content=yes><meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=translucent-black><link rel=apple-touch-icon href=logo.86cc585b.svg><link rel=apple-touch-startup-image href=logo.86cc585b.svg><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><script src=https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js></script><body data-game>
   <header>
     <h1>C'est où ? 🎲</h1>
   </header>
@@ -42,17 +42,58 @@
   <dialog class=intro>
     <form>
       <h2>C'est où ?</h2>
-      <p></p>
-      <button type=button>🎲 Commencer !</button>
+      <p>
+        Retrouvez la localisation d'un lieu à partir de son image sur une carte ou une photographie aérienne de l'<a href=https://www.ign.fr/>IGN</a>.
+      <p>
+        Déplacez vous sur la carte, choississez la couche parmi la liste des couches proposées 
+        <img src=https://raw.githubusercontent.com/Viglino/font-gis/c3b99d144cf2feefa65fc2e0167c167d7bc27bac/svg/layer/uEA4A-layer-stack-o.svg>
+        <br>
+        ou utilisez l'outil de recherche 
+        <img src=https://raw.githubusercontent.com/Viglino/font-gis/c3b99d144cf2feefa65fc2e0167c167d7bc27bac/svg/search/uEA60-search-poi.svg>
+        <br>
+        Aidez-vous des 📸 photos et 🗝️ indices proposés.
+        <br>
+        Lorsque vous êtes centré au bon endroit validés votre choix <span>C'est ici !</span>
+      </p>
+      <p>
+        <b>-</b> lieux à trouver, bonne chance...
+      </p>
+      <button type=button>🎲 Commencer à jouer !</button>
     </form>
   </dialog>
   <dialog class=final>
     <form>
       <h2>C'est tout pour aujourd'hui !</h2>
-      <p></p>
+      <p>
+        Vous avez terminé la série en <span class=time></span> !
+        <br>
+        Avec une erreur de <span class=dist></span>
+      </p>
+    </form>
+  </dialog>
+  <dialog class=info>
+    <form>
+      <h2>C'est où ?</h2>
+      <p>
+        Retrouvez la localisation d'un lieu à partir de son image sur une carte 
+        ou une photographie aérienne de l'<a href=https://www.ign.fr/>IGN</a>.
+      </p>
+      <p>
+        Vous avez trouvé <span class=found>0</span> lieux sur <span class=total></span> en <span class=time>0</span>.
+        <br>
+        Cumul des distances <span class=dist>0 km</span>.
+      </p>
+      <p>
+        Cartes et photographies aériennes © <a href=https://geoservices.ign.fr/>Géoservices - IGN</a>
+        <br>
+        Photographies <a href=https://commons.wikimedia.org/>Wikimedia commons</a>
+        <br>
+        © <a href=https://github.com/Viglino/maps/tree/main/src/cestou>Viglino - Github</a>
+      </p>
+      <a class=question target=_new>Lien vers cette question</a>
       <button type=button>ok</button>
     </form>
   </dialog>
 
-  <script type=module src=cestou.7523dceb.js></script>
+  <script type=module src=cestou.54e74113.js></script>
 
