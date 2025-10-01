@@ -37,7 +37,8 @@ class Game {
     //
     this.debug = /debug/.test(location.hash)
     //
-    this.lonlat = location.search.replace(/^\?lonlat=([0-9.]*),([0-9.]*).*/, '$1,$2').split(',').map(parseFloat)
+    this.lonlat = location.search.replace(/^\?lonlat=([-,0-9.]*),([-,0-9.]*).*/, '$1,$2').split(',').map(parseFloat)
+    console.log('lonlat', this.lonlat);
     // 
     this.timerDiv = document.querySelector('main .timer');
     getMapAPI(this)
