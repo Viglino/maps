@@ -21,6 +21,16 @@ document.querySelector('main section button.info').addEventListener('click', e =
   dinfo.querySelector('.question').href = location.origin + location.pathname +'?lonlat=' + pt[0].toFixed(5) + ',' + pt[1].toFixed(5);
   dinfo.showModal();
 })
+const aside = document.querySelector('aside')
+aside.addEventListener('click', e => {
+  if (e.target === aside) {
+    e.currentTarget.classList.toggle('zoom');
+  }
+})
+aside.addEventListener('pointerout', e => {
+  aside.classList.remove('zoom');
+})
+
 
 // Current feature
 let currentFeature = null;
