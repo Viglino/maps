@@ -27,7 +27,7 @@ aside.addEventListener('click', e => {
     e.currentTarget.classList.toggle('zoom');
   }
 })
-aside.addEventListener('pointerout', e => {
+aside.addEventListener('pointerleave', e => {
   aside.classList.remove('zoom');
 })
 
