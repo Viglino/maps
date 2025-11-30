@@ -45,7 +45,7 @@ class Game {
     this.totalTime = 0;
     this.totalDist = 0;
     //
-    this.debug = /debug/.test(location.hash)
+    this.debug = /debug/.test(location.hash);
     //
     this.lonlat = location.search.replace(/^\?lonlat=([-,0-9.]*),([-,0-9.]*).*/, '$1,$2').split(',').map(parseFloat)
     console.log('lonlat', this.lonlat);
@@ -66,6 +66,11 @@ class Game {
     dinfo.querySelector('.total').innerText = this.features.length;
     dlog.querySelector('b').innerText = this.features.length;
     this.setDistance(0);
+    // Avent
+    if (/avent/.test(location.hash)) {
+      document.body.dataset.avent = '';
+      this.mapAPI1.mapControl({id: 'printDlg', visible: true})
+    }
   }
   start() {
     this.running = true;
