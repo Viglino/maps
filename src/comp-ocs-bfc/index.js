@@ -4,7 +4,7 @@ import '../ocs-ge/index.css'
 import './index.css'
 
 import getMap from '../ocs-ge/map/getMap'
-const map2 = getMap(2017, [351328, 5940916])
+const map2 = getMap(2017, [9610, 5409620]);
 
 import getWFS, { getCommunes } from '../ocs-bfc/getWFS'
 const couverture = getWFS(map2, 2017, 'Couverture');
