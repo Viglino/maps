@@ -508,3 +508,16 @@ dialog.indice a {
     border-color: #08f;
  }
 }
+
+
+/* Avent */
+[data-avent] aside {
+  width: 800px;
+  height: 800px;
+}
+[data-avent] aside h1 {
+  display: none;
+}
+[data-avent] aside iframe {
+  pointer-events: all;
+}
