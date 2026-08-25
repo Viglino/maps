@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>FIG-2026</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="Maps" />
+  <meta name="keywords" content="" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@viglino" />
+  <meta name="twitter:creator" content="@viglino" />
+  <meta name="twitter:title" content="C'est-où ?" />
+  <meta name="twitter:description" content="Localisez les lieux à partir d'une photographie aérienne." />
+  <meta name="twitter:image" content="https://viglino.github.io/maps/src/cestou/screen.jpg" />
+
+  <link rel="icon" type="image/png" href="./cestou/logo.svg">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
+  <link rel="apple-touch-icon" href="./cestou/logo.svg">
+  <link rel="apple-touch-startup-image" href="./cestou/logo.svg">
+
+  <meta name="format-detection" content="telephone=no"> 
+  <meta name="msapplication-tap-highlight" content="no">   
+
+  <!-- API -->
+  <script type="text/javascript" src="https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js"></script>
+
+</head>
+<body data-game>
+  <div class="backdrop"></div>
+  <div class="zoom">
+    <button class="out"></button>
+    <button class="in"></button>
+    <button class="close"></button>
+  </div>
+  <header>
+    <h1>FIG-2026 🎲</h1>
+  </header>
+  <main>
+    <aside>
+      <img />
+    </aside>
+    <section>
+      <iframe id="map" src="https://macarte.ign.fr/carte/7ykTrt/Jeu-Saint-Die" allow="clipboard-read; clipboard-write"></iframe>
+    </section>
+  </main>
+  <footer>
+  </footer>
+
+  <dialog class="start">
+    <h2>paysage</h2>
+    <div class="content">
+      <p>info</p>
+      <input type="text" />
+      <div class="buttons">
+        <button>Démarrer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="./geoloc/index.js"></script>
+</body>
+</html>

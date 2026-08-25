@@ -1,0 +1,245 @@
+html, body {
+  color: #333;
+  background-color: #f1f2f6;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Trebuchet MS, sans-serif;
+  display: flex;
+  overflow: hidden;
+}
+
+header {
+  z-index: 1;
+  padding: 0 2em;
+  display: block;
+  background-color: #2270AC;
+  color: #fff;
+}
+header:before {
+  content: "";
+  position: absolute;
+  top: -0.5em;
+  left: -1em;
+  width: 15em;
+  height: 100%;
+  background-image: url(./fig-2026.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+header h1 {
+  font-size: 2em;
+  margin: 0 0 0 5em;
+  padding: 0.5em 0;
+  text-align: right;
+}
+
+main {
+  flex-direction: row;
+  flex: 1;
+  display: flex;
+  z-index: 1;
+}
+main aside {
+  width: 6em;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+main aside img {
+  width: 100%;
+  cursor: pointer;
+}
+main aside img:hover {
+  transform: scale(1.2);
+  z-index: 2;
+}
+body[data-img] aside img {
+  transform: scale(1);
+}
+
+.backdrop {
+  display: none;
+}
+
+[data-img] .backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 98;
+}
+body .zoom {
+  position: fixed;
+  left: 3em;
+  top: 7.5em;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  width: 0;
+  height: 0;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 1);
+  aspect-ratio: 1/1;
+  pointer-events: none; 
+  box-shadow: 5px 5px 50px 20px #000;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+body .zoom:before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+} 
+body .zoom:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 50px 10px #000;
+  z-index: 1;
+  pointer-events: none;
+}
+.zoom button {
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  bottom: 0.25em;
+  left: 50%;
+  background-color: #000;
+  color: #fff;
+  font-size: 3em;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+}
+.zoom button:before,
+.zoom button:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.5em;
+  height: 0.15em;
+  background-color: #fff;
+  border-radius: 2px;
+}
+.zoom .out {
+  transform: translate(-100%, 0);
+}
+.zoom .in:after, 
+.zoom .close:after {
+  width: 0.15em;
+  height: 0.5em;
+}
+.zoom .close {
+  bottom: 0;
+  top: 0.25em;
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+body[data-img] .zoom {
+  left: 50%;
+  top: 50%;
+  opacity: 1;
+  width: min(100vh, 100vw);
+  height: min(100vh, 100vw);
+  pointer-events: auto;
+}
+
+main section {
+  width: calc(100% - 6em);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+main section iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+dialog {
+  background-color: #2270AC;
+  width: 30em;
+  max-width: calc(100% - 2em);
+  box-sizing: border-box;
+  padding: 0 1em 1em 1em;
+  overflow: hidden;
+}
+dialog .content {
+  text-align: center;
+  width: 12em;
+  max-width: calc(100% - 9em);
+  min-width: 8em;
+  margin: 0 0 0 auto;
+  padding: 2em 0;
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+}
+dialog.start h2{
+  font-size: 5em;
+  color: #fff;
+  margin: -0.2em 0 0;
+  text-align: right;
+}
+dialog.start p {
+  color: #fff;
+}
+dialog.start:before {
+  content: "";
+  z-index: 1;
+  background-image: url(./fig-2026.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 30em;
+  max-width: calc(100% - 8em);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+dialog input {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  width: 5em;
+  border-radius: 0.5em;
+  border: 1px solid #ccc;
+  margin: 0.5em auto;
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+dialog button {
+  font-size: 1.5em;
+  text-align: center;
+  width: 5em;
+  border-radius: 0.2em;
+  border: 1px solid #ccc;
+  display: block;
+  margin: 0 auto;
+}
+dialog button:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+dialog h2 {
+  margin: 0;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
