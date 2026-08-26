@@ -40,10 +40,18 @@
   </header>
   <main>
     <aside>
-      <img />
+      <button class="img"><img /></button>
+      <button class="ortho"><img src="https://data.geopf.fr/wmts?layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=9&TileCol=265&TileRow=177" /></button>
+      <button class="map"><img src="https://data.geopf.fr/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=9&TileCol=265&TileRow=177" /></button>
     </aside>
     <section>
       <iframe id="map" src="https://macarte.ign.fr/carte/7ykTrt/Jeu-Saint-Die" allow="clipboard-read; clipboard-write"></iframe>
+      <div class="zoomToPlay">
+        <p>Zoomer sur le lieu...</p>
+      </div>
+      <div class="validate">
+        <button>Valider cette position</button>
+      </div>
     </section>
   </main>
   <footer>
@@ -56,6 +64,17 @@
       <input type="text" />
       <div class="buttons">
         <button>Démarrer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dist">
+    <h2>paysage</h2>
+    <div class="content">
+      <p>Vous êtes à <span></span> de la photo</p>
+      <div class="buttons">
+        <button class="again">Essaye encore !</button>
+        <button class="win">Bravo !</button>
       </div>
     </div>
   </dialog>

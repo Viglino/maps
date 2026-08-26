@@ -16,6 +16,8 @@ header {
   display: block;
   background-color: #2270AC;
   color: #fff;
+  overflow: hidden;
+  position: relative;
 }
 header:before {
   content: "";
@@ -23,7 +25,7 @@ header:before {
   top: -0.5em;
   left: -1em;
   width: 15em;
-  height: 100%;
+  height: 50em;
   background-image: url(./fig-2026.png);
   background-repeat: no-repeat;
   background-size: contain;
@@ -42,14 +44,38 @@ main {
   z-index: 1;
 }
 main aside {
-  width: 6em;
-  height: 100%;
+  position: absolute;
+  right: 0;
   background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   z-index: 1;
+  background-color: transparent;
+  padding: 0 0.5em;
+  pointer-events: none;
 }
+main aside > button {
+  pointer-events: all;
+  display: block;
+  width: 4em;
+  height: 4em;
+  overflow: hidden;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+  box-shadow: 1px 1px 5px 0 #000;
+  margin: 0.5em auto;
+  box-sizing: border-box;
+  background: #666;
+}
+main aside > button:first-child {
+  width: 6em;
+  height: 6em;
+}
+
 main aside img {
   width: 100%;
+  height: 100%;
   cursor: pointer;
 }
 main aside img:hover {
@@ -73,9 +99,9 @@ body[data-img] aside img {
 }
 body .zoom {
   position: fixed;
-  left: 3em;
+  right: 3em;
   top: 7.5em;
-  transform: translate(-50%, -50%);
+  transform: translate(50%, -50%);
   z-index: 99;
   width: 0;
   height: 0;
@@ -148,16 +174,16 @@ body .zoom:after {
 }
 
 body[data-img] .zoom {
-  left: 50%;
+  right: 50%;
   top: 50%;
   opacity: 1;
-  width: min(100vh, 100vw);
-  height: min(100vh, 100vw);
+  width: min(100dvh, 100vw);
+  height: min(100dvh, 100vw);
   pointer-events: auto;
 }
 
 main section {
-  width: calc(100% - 6em);
+  width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
@@ -166,6 +192,70 @@ main section iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+main section > div.validate {
+  position: absolute;
+  display: none;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0 0 0.5em;
+  color: #fff;
+  border-radius: 0.5em;
+}
+main section > div.validate button {
+  background-color: #2270ac;
+  color: #fff;
+  font-size: 1.5em;
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.25em 1em;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 5px #fff, inset -2px -3px 5px #000, 1px 1px 3px 1px #000;
+}
+main section > div.validate button:hover {
+  background-color: #1a5d8c;
+}
+main section > div.zoomToPlay {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 0.4em dashed #2270ac;
+  pointer-events: none;
+  z-index: 99;
+  border-image-source: repeating-linear-gradient(45deg, rgba(34,112,172,0.8), rgb(34,112,172,0.5) 10px, rgba(255,255,0,0.5) 10px 20px);
+  border-image-slice: 10;
+  box-shadow: inset 0 0 10px 2px #000;
+}
+main section > div.zoomToPlay p {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: #fff;
+  background-color: rgba(34, 112, 172, 0.8);
+  font-size: 1em;
+  padding: 0.25em 1em;
+  border-radius: 0.5em;
+  margin: 0 0 0.5em;
+  animation: 1s infinite blink;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.7;
+  }
+}
+
+[data-validate] main section > div.validate {
+  display: block;
+}
+[data-validate] main section > div.zoomToPlay {
+  display: none;
 }
 
 dialog {
@@ -187,16 +277,16 @@ dialog .content {
   position: relative;
   box-sizing: border-box;
 }
-dialog.start h2{
+dialog h2{
   font-size: 5em;
   color: #fff;
   margin: -0.2em 0 0;
   text-align: right;
 }
-dialog.start p {
+dialog p {
   color: #fff;
 }
-dialog.start:before {
+dialog:before {
   content: "";
   z-index: 1;
   background-image: url(./fig-2026.png);
@@ -209,6 +299,36 @@ dialog.start:before {
   top: 0;
   left: 0;
   pointer-events: none;
+}
+
+dialog.dist button.win {
+  background-color: #2ecc71;
+  display: none;
+}
+dialog.dist[data-win] button.win {
+  display: block;
+}
+dialog.dist button.win:hover {
+  background-color: #27ae60;
+}
+dialog.dist button.again {
+  color: #fff;
+  background-color: #c31617;
+}
+dialog.dist button.again:hover {
+  background-color: #6e1512;
+}
+dialog.dist[data-win] button.again {
+  display: none;
+}
+dialog.dist p {
+  font-size: 1.5em;
+  margin: -0.5em 0 1em;
+}
+dialog.dist span {
+  font-size: 1.1em;
+  display: block;
+  font-weight: bold;
 }
 
 dialog input {
