@@ -1,4 +1,11 @@
 import { getDistance, toKMString } from './utils.js'
+import Map from 'ol/Map.js'
+import View from 'ol/View.js'
+import Projection from 'ol/proj/Projection.js'
+import GeoImageLayer from 'ol-ext/layer/GeoImage.js'
+import GeoImageSource from 'ol-ext/source/GeoImage.js'
+
+import 'ol/ol.css'
 import "./index.css"
 
 let mapAPI;
@@ -11,7 +18,6 @@ MapIFrameAPI.ready('map', function(api) {
   mapAPI.setCenter([6.937, 48.297]);
   mapAPI.setZoom(12);
   mapAPI.on('move', e => {
-    console.log(e)
     if (e.zoom > 15) {
       document.body.dataset.validate = 'true';
     } else {
@@ -19,13 +25,15 @@ MapIFrameAPI.ready('map', function(api) {
     }
   });
   mapAPI.getFeatures({ layerId: 2 }, features => {
+    features = features.filter(f => f.properties && f.properties.id);
+    features.sort((a, b) => a.properties.nb - b.properties.nb);
     game.features = features;
     // ready
     getImage();
   });
 });
 
-
+/* Layerswitcher */
 document.querySelector('main aside button.ortho').addEventListener('click', e => {
   mapAPI.setLayer({ id: 4, visible: true });
 })
@@ -64,43 +72,68 @@ ddist.querySelector('button.win').addEventListener('click', e => {
 const zoomDiv = document.querySelector('.zoom');
 const img = document.querySelector('aside img');
 
+const pixelProjection = new Projection({
+  code: 'pixel',
+  units: 'pixels',
+  extent: [-100000, -100000, 100000, 100000]
+});
+const zoomMap = new Map({
+  target: zoomDiv,
+  view: new View({
+    projection: pixelProjection,
+    center: [0, 0],
+    zoom: 2
+  })
+});
+console.log(zoomMap);
+
 function zoom(b) {
-  let zoom = Number(document.body.dataset.img) || 0;
-  if (zoom === 0) {
-    zoom = document.querySelector(".zoom").clientWidth;
-  }
-  zoom += b * 200;
-  if (img.naturalHeight < img.naturalWidth) {
-    zoom = Math.max(zoom, document.querySelector(".zoom").clientWidth * img.naturalHeight / img.naturalWidth);
-    zoomDiv.style.backgroundSize = `auto ${zoom}px`;
+  zoomMap.updateSize();
+  if (!b) {
+    const imgLayer = zoomMap.getLayers().item(0);
+    const ext = imgLayer.getSource().getExtent();
+    const p0 = Math.max(ext[0], ext[1]);
+    const p1 = Math.min(ext[2], ext[3]);
+    zoomMap.getView().fit([p0,p0,p1,p1])
+    setTimeout(() => {
+      zoomMap.updateSize();
+    }, 100);
   } else {
-    zoom = Math.max(zoom, document.querySelector(".zoom").clientWidth * img.naturalWidth / img.naturalHeight);
-    zoomDiv.style.backgroundSize = `${zoom}px auto`;
+    zoomMap.getView().setZoom(zoomMap.getView().getZoom() + b * 0.5);
   }
-  document.body.dataset.img = zoom;
+
 };
 zoomDiv.querySelector('.in').addEventListener('click', e => zoom(+1));
 zoomDiv.querySelector('.out').addEventListener('click', e => zoom(-1));
-zoomDiv.addEventListener('wheel', e => zoom(e.deltaY > 0 ? -1 : +1));
 
 document.querySelector('.backdrop').addEventListener('click', e => {
   if (!document.body.dataset.img) return;
   if (e.target.tagName === 'BUTTON') return;
   delete document.body.dataset.img
-  zoomDiv.style.backgroundSize = 'cover';
+  delete document.body.dataset.ready
 });
 document.querySelector('.zoom .close').addEventListener('click', e => {
   delete document.body.dataset.img
-  zoomDiv.style.backgroundSize = 'cover';
+  delete document.body.dataset.ready
 });
 
+
+/* Open image in zoom */
 img.addEventListener('load', e => {
   document.body.dataset.img = 'loaded';
-  setTimeout(() => zoom(0), 500);
+  setTimeout(() => {
+    zoom(0)
+  }, 500);
 });
 img.addEventListener('click', e => {
-  document.body.dataset.img = '';
-  setTimeout(() => zoom(0), 500);
+  // zoom(0);
+  setTimeout(() => {
+    document.body.dataset.img = 'ok';
+  }, 10);
+  setTimeout(() => {
+    document.body.dataset.ready = '';
+    zoom(0)
+  }, 500);
 });
 
 
@@ -119,6 +152,7 @@ function getImage() {
 
 function showImage(id) {
   dlog.close();
+  document.querySelector('header div').innerHTML = id;
   // Recherche image
   game.feature = game.features.find((f, i) => {
     if (f.properties.id == id) {
@@ -132,5 +166,20 @@ function showImage(id) {
     return;
   }
   document.querySelector('aside img').src = "https://macarte.ign.fr/api/image/" + game.feature.properties.img;
-  document.body.querySelector('.zoom').style.backgroundImage = "url(https://macarte.ign.fr/api/image/" + game.feature.properties.img + ")";
+  const imgLayer = new GeoImageLayer({
+    source: new GeoImageSource({
+      url: "https://macarte.ign.fr/api/image/" + game.feature.properties.img,
+      imageCenter: [0,0],
+      imageScale: [1,1],
+      projection: pixelProjection
+    })
+  });
+  const oldLayer = zoomMap.getLayers().item(0);
+  if (oldLayer) {
+    zoomMap.removeLayer(oldLayer);
+  }
+  zoomMap.addLayer(imgLayer);
+  imgLayer.getSource().getGeoImage().addEventListener('load', () => {
+    zoom(0);
+  })
 }
