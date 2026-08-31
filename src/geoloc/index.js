@@ -68,6 +68,15 @@ document.querySelector('main aside button.lidar').addEventListener('click', e =>
   mapAPI.setLayer({ id: 12, visible: true });
 })
 
+document.querySelector('.zoomToPlay button').addEventListener('click', e => {
+  mapAPI.getZoom(zoom => {
+    mapAPI.getCenter(center => {
+      if (zoom < 15.5) {
+        mapAPI.moveTo({ destination: center, zoom: 15.5, type: 'moveTo' });
+      }
+    });
+  });
+});
 
 document.querySelector('.validate button').addEventListener('click', e => {
   mapAPI.getCenter(pos => {
@@ -115,7 +124,6 @@ const zoomMap = new Map({
     zoom: 2
   })
 });
-console.log(zoomMap);
 
 function zoom(b) {
   zoomMap.updateSize();
