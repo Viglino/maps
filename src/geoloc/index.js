@@ -9,7 +9,7 @@ import 'ol/ol.css'
 import "./index.css"
 
 let mapAPI;
-const game = {};
+const game = window.game = {};
 
 MapIFrameAPI.ready('map', function(api) {
   window.mapAPI = mapAPI = api;
@@ -26,8 +26,9 @@ MapIFrameAPI.ready('map', function(api) {
   });
   mapAPI.getFeatures({ layerId: 2 }, features => {
     features = features.filter(f => f.properties && f.properties.id);
-    features.sort((a, b) => a.properties.nb - b.properties.nb);
+    features.sort((a, b) => (a.properties.nb || 999) - (b.properties.nb || 999));
     game.features = features;
+    game.max = features.length;
     // ready
     getImage();
   });
@@ -35,10 +36,36 @@ MapIFrameAPI.ready('map', function(api) {
 
 /* Layerswitcher */
 document.querySelector('main aside button.ortho').addEventListener('click', e => {
+  mapAPI.setLayer({ id: 1, visible: false });
   mapAPI.setLayer({ id: 4, visible: true });
+  mapAPI.setLayer({ id: 8, visible: false });
+  mapAPI.setLayer({ id: 9, visible: false });
+  mapAPI.setLayer({ id: 10, visible: false });
+  mapAPI.setLayer({ id: 12, visible: false });
 })
 document.querySelector('main aside button.map').addEventListener('click', e => {
+  mapAPI.setLayer({ id: 1, visible: true, opacity: 1 });
   mapAPI.setLayer({ id: 4, visible: false });
+  mapAPI.setLayer({ id: 8, visible: false });
+  mapAPI.setLayer({ id: 9, visible: false });
+  mapAPI.setLayer({ id: 10, visible: false });
+  mapAPI.setLayer({ id: 12, visible: false });
+})
+document.querySelector('main aside button.reseau').addEventListener('click', e => {
+  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 }, console.log);
+  mapAPI.setLayer({ id: 4, visible: false });
+  mapAPI.setLayer({ id: 8, visible: true });
+  mapAPI.setLayer({ id: 9, visible: true });
+  mapAPI.setLayer({ id: 10, visible: false });
+  mapAPI.setLayer({ id: 12, visible: false });
+})
+document.querySelector('main aside button.lidar').addEventListener('click', e => {
+  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 }, console.log);
+  mapAPI.setLayer({ id: 4, visible: false });
+  mapAPI.setLayer({ id: 8, visible: false });
+  mapAPI.setLayer({ id: 9, visible: false });
+  mapAPI.setLayer({ id: 10, visible: true });
+  mapAPI.setLayer({ id: 12, visible: true });
 })
 
 
@@ -67,7 +94,10 @@ ddist.querySelector('button.win').addEventListener('click', e => {
   ddist.close();
   getImage();
 })
-
+dlog.querySelector('.next').addEventListener('click', e => {
+  game.features.shift();
+  getImage();
+});
 
 const zoomDiv = document.querySelector('.zoom');
 const img = document.querySelector('aside img');
@@ -143,14 +173,25 @@ dlog.querySelector('button').addEventListener('click', e => {
 })
 
 function getImage() {
-  if (/debug/.test(document.location.hash)) {
+  if (!game.features.length) {
+    dlog.querySelector('input').value = 'FIN 🎉';
+    dlog.querySelector('p').innerHTML = 'Bravo, vous avez fini !';
+    return;
+  } else if (/debug/.test(document.location.hash)) {
     const id = game.features[0].properties.id;
     dlog.querySelector('input').value = id;
+    document.body.dataset.debug = 'debug';
   } 
+  dlog.querySelector('p').innerHTML = '<strong>' + game.features.length + '</strong> paysages<br/>à trouver sur <strong>' + game.max + '</strong>';
   dlog.showModal();
+  setTimeout(() => {
+    dlog.querySelector('input').focus();
+  }, 100);
 }
 
 function showImage(id) {
+  if (!game.features.length) return;
+  // Go!
   dlog.close();
   document.querySelector('header div').innerHTML = id;
   // Recherche image

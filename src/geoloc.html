@@ -43,8 +43,10 @@
   <main>
     <aside>
       <button class="img"><img /></button>
-      <button class="ortho"><img src="https://data.geopf.fr/wmts?layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=9&TileCol=265&TileRow=177" /></button>
-      <button class="map"><img src="https://data.geopf.fr/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=9&TileCol=265&TileRow=177" /></button>
+      <button class="ortho" title="photographie"><img src="https://data.geopf.fr/wmts?layer=ORTHOIMAGERY.ORTHOPHOTOS&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix=9&TileCol=265&TileRow=177" /></button>
+      <button class="map" title="carte"><img src="https://data.geopf.fr/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&style=normal&tilematrixset=PM&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=9&TileCol=265&TileRow=177" /></button>
+      <button class="reseau" title="les réseaux"></button>
+      <button class="lidar" title="lidar HD"></button>
     </aside>
     <section>
       <iframe id="map" src="https://macarte.ign.fr/carte/7ykTrt/Jeu-Saint-Die" allow="clipboard-read; clipboard-write"></iframe>
@@ -59,13 +61,14 @@
   <footer>
   </footer>
 
-  <dialog class="start">
+  <dialog class="start" closedby="none">
     <h2>paysage</h2>
     <div class="content">
       <p>info</p>
       <input type="text" />
       <div class="buttons">
         <button>Démarrer</button>
+        <button class="next">Suivant</button>
       </div>
     </div>
   </dialog>

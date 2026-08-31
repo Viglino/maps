@@ -1,4 +1,4 @@
-html, body {
+html, body, button {
   color: #333;
   background-color: #f1f2f6;
   flex-direction: column;
@@ -67,8 +67,8 @@ main aside {
 main aside > button {
   pointer-events: all;
   display: block;
-  width: 4em;
-  height: 4em;
+  width: 3.5em;
+  height: 3.5em;
   overflow: hidden;
   border-radius: 50%;
   overflow: hidden;
@@ -83,6 +83,16 @@ main aside > button {
 main aside > button:first-child {
   width: 6em;
   height: 6em;
+}
+main aside > button.reseau {
+  background-image: url(./roads.png);
+  background-size: cover;
+  background-position: center;
+}
+main aside > button.lidar {
+  background-image: url(./cosia.png);
+  background-size: cover;
+  background-position: center;
 }
 
 main aside img {
@@ -236,6 +246,7 @@ main section > div.validate button {
   border: none;
   border-radius: 0.5em;
   padding: 0.25em 1em;
+  margin: auto;
   cursor: pointer;
   box-shadow: inset 2px 2px 5px #fff, inset -2px -3px 5px #000, 1px 1px 3px 1px #000;
   pointer-events: auto;
@@ -279,6 +290,7 @@ main section > div.zoomToPlay p {
 
 [data-validate] main section > div.validate {
   display: block;
+  text-align: center;
 }
 [data-validate] main section > div.zoomToPlay {
   display: none;
@@ -388,4 +400,24 @@ dialog h2 {
 }
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.8);
+}
+
+dialog.start .next {
+  display: none;
+}
+[data-debug] dialog.start .next {
+  display: block;
+  margin: .5em auto -1em;
+}
+dialog.start .content {
+  margin-top: 0;
+}
+dialog.start strong {
+  font-size: 2em;
+  vertical-align: middle;
+  line-height: 0.8em;
+}
+dialog.start p {
+  font-size: 1.2em;
+  margin: 0;
 }
