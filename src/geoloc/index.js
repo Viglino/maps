@@ -52,7 +52,7 @@ document.querySelector('main aside button.map').addEventListener('click', e => {
   mapAPI.setLayer({ id: 12, visible: false });
 })
 document.querySelector('main aside button.reseau').addEventListener('click', e => {
-  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 }, console.log);
+  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 });
   mapAPI.setLayer({ id: 4, visible: false });
   mapAPI.setLayer({ id: 8, visible: true });
   mapAPI.setLayer({ id: 9, visible: true });
@@ -60,7 +60,7 @@ document.querySelector('main aside button.reseau').addEventListener('click', e =
   mapAPI.setLayer({ id: 12, visible: false });
 })
 document.querySelector('main aside button.lidar').addEventListener('click', e => {
-  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 }, console.log);
+  mapAPI.setLayer({ id: 1, visible: false });
   mapAPI.setLayer({ id: 4, visible: false });
   mapAPI.setLayer({ id: 8, visible: false });
   mapAPI.setLayer({ id: 9, visible: false });
@@ -192,6 +192,7 @@ function getImage() {
 function showImage(id) {
   if (!game.features.length) return;
   // Go!
+  id = id.toUpperCase();
   dlog.close();
   document.querySelector('header div').innerHTML = id;
   // Recherche image
