@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=fr xmlns=http://www.w3.org/1999/xhtml><script type=module src=molene.f3ae9377.js></script><link rel=stylesheet href=geoloc.1aaaf7df.css><title>FIG-2026</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name=description content=Maps><meta name=keywords content><meta name=twitter:card content=summary_large_image><meta name=twitter:site content=@viglino><meta name=twitter:creator content=@viglino><meta name=twitter:title content="C'est-où ?"><meta name=twitter:description content="Localisez les lieux à partir d'une photographie aérienne."><meta name=twitter:image content=https://viglino.github.io/maps/src/geoloc/screen.jpg><link rel=icon type=image/png href=logo.86cc585b.svg><meta name=mobile-web-app-capable content=yes><meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=translucent-black><link rel=apple-touch-icon href=logo.86cc585b.svg><link rel=apple-touch-startup-image href=logo.86cc585b.svg><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><link rel=manifest href=geoloc/fig.manifest><script src=https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js></script><body data-game>
+<!DOCTYPE html><html lang=fr xmlns=http://www.w3.org/1999/xhtml><script type=module src=molene.f3ae9377.js></script><link rel=stylesheet href=geoloc.67e82893.css><title>FIG-2026</title><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name=description content=Maps><meta name=keywords content><meta name=twitter:card content=summary_large_image><meta name=twitter:site content=@viglino><meta name=twitter:creator content=@viglino><meta name=twitter:title content="C'est-où ?"><meta name=twitter:description content="Localisez les lieux à partir d'une photographie aérienne."><meta name=twitter:image content=https://viglino.github.io/maps/src/geoloc/screen.jpg><link rel=icon type=image/png href=logo.86cc585b.svg><meta name=mobile-web-app-capable content=yes><meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=translucent-black><link rel=apple-touch-icon href=logo.86cc585b.svg><link rel=apple-touch-startup-image href=logo.86cc585b.svg><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><link rel=manifest href=geoloc/fig.manifest><script src=https://ignf.gitlab.io/macarte/mcviewer/MapIFrameAPI.js></script><body data-game>
   <div class=backdrop></div>
   <div class=zoom>
     <button class=out></button>
@@ -12,8 +12,10 @@
   <main>
     <aside>
       <button class=img><img></button>
-      <button class=ortho><img src="https://data.geopf.fr/wmts?layer=ORTHOIMAGERY.ORTHOPHOTOS&amp;style=normal&amp;tilematrixset=PM&amp;Service=WMTS&amp;Request=GetTile&amp;Version=1.0.0&amp;Format=image%2Fjpeg&amp;TileMatrix=9&amp;TileCol=265&amp;TileRow=177"></button>
-      <button class=map><img src="https://data.geopf.fr/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&amp;style=normal&amp;tilematrixset=PM&amp;Service=WMTS&amp;Request=GetTile&amp;Version=1.0.0&amp;Format=image%2Fpng&amp;TileMatrix=9&amp;TileCol=265&amp;TileRow=177"></button>
+      <button class=ortho title=photographie><img src="https://data.geopf.fr/wmts?layer=ORTHOIMAGERY.ORTHOPHOTOS&amp;style=normal&amp;tilematrixset=PM&amp;Service=WMTS&amp;Request=GetTile&amp;Version=1.0.0&amp;Format=image%2Fjpeg&amp;TileMatrix=9&amp;TileCol=265&amp;TileRow=177"></button>
+      <button class=map title=carte><img src="https://data.geopf.fr/wmts?layer=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&amp;style=normal&amp;tilematrixset=PM&amp;Service=WMTS&amp;Request=GetTile&amp;Version=1.0.0&amp;Format=image%2Fpng&amp;TileMatrix=9&amp;TileCol=265&amp;TileRow=177"></button>
+      <button class=reseau title="les réseaux"></button>
+      <button class=lidar title="lidar HD"></button>
     </aside>
     <section>
       <iframe id=map src=https://macarte.ign.fr/carte/7ykTrt/Jeu-Saint-Die allow="clipboard-read; clipboard-write"></iframe>
@@ -28,13 +30,14 @@
   <footer>
   </footer>
 
-  <dialog class=start>
+  <dialog class=start closedby=none>
     <h2>paysage</h2>
     <div class=content>
       <p>info</p>
       <input>
       <div class=buttons>
         <button>Démarrer</button>
+        <button class=next>Suivant</button>
       </div>
     </div>
   </dialog>
@@ -50,5 +53,5 @@
     </div>
   </dialog>
 
-  <script type=module src=geoloc.12c40dd3.js></script>
+  <script type=module src=geoloc.96918980.js></script>
 
