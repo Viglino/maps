@@ -32,11 +32,14 @@ MapIFrameAPI.ready('map', function(api) {
     // ready
     getImage();
   });
+  // Show map
+  document.querySelector('main aside button.map').click();
 });
 
 /* Layerswitcher */
 document.querySelector('main aside button.ortho').addEventListener('click', e => {
   mapAPI.setLayer({ id: 1, visible: false });
+  mapAPI.setLayer({ id: 3, visible: false });
   mapAPI.setLayer({ id: 4, visible: true });
   mapAPI.setLayer({ id: 8, visible: false });
   mapAPI.setLayer({ id: 9, visible: false });
@@ -44,7 +47,8 @@ document.querySelector('main aside button.ortho').addEventListener('click', e =>
   mapAPI.setLayer({ id: 12, visible: false });
 })
 document.querySelector('main aside button.map').addEventListener('click', e => {
-  mapAPI.setLayer({ id: 1, visible: true, opacity: 1 });
+  mapAPI.setLayer({ id: 1, visible: false, opacity: 1 });
+  mapAPI.setLayer({ id: 3, visible: true, opacity: 1 });
   mapAPI.setLayer({ id: 4, visible: false });
   mapAPI.setLayer({ id: 8, visible: false });
   mapAPI.setLayer({ id: 9, visible: false });
@@ -52,7 +56,8 @@ document.querySelector('main aside button.map').addEventListener('click', e => {
   mapAPI.setLayer({ id: 12, visible: false });
 })
 document.querySelector('main aside button.reseau').addEventListener('click', e => {
-  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.3 });
+  mapAPI.setLayer({ id: 1, visible: true, opacity: 0.4 });
+  mapAPI.setLayer({ id: 3, visible: false });
   mapAPI.setLayer({ id: 4, visible: false });
   mapAPI.setLayer({ id: 8, visible: true });
   mapAPI.setLayer({ id: 9, visible: true });
@@ -61,6 +66,7 @@ document.querySelector('main aside button.reseau').addEventListener('click', e =
 })
 document.querySelector('main aside button.lidar').addEventListener('click', e => {
   mapAPI.setLayer({ id: 1, visible: false });
+  mapAPI.setLayer({ id: 3, visible: false });
   mapAPI.setLayer({ id: 4, visible: false });
   mapAPI.setLayer({ id: 8, visible: false });
   mapAPI.setLayer({ id: 9, visible: false });
@@ -100,6 +106,10 @@ ddist.querySelector('button.again').addEventListener('click', e => {
   ddist.close();
 })
 ddist.querySelector('button.win').addEventListener('click', e => {
+  ddist.close();
+  getImage();
+})
+ddist.querySelector('button.next').addEventListener('click', e => {
   ddist.close();
   getImage();
 })
@@ -216,6 +226,7 @@ function showImage(id) {
     return;
   }
   document.querySelector('aside img').src = "https://macarte.ign.fr/api/image/" + game.feature.properties.img;
+  document.querySelector('.copy').innerText = (game.feature.properties.cimg || '') + ' ' + (game.feature.properties.date || '');
   const imgLayer = new GeoImageLayer({
     source: new GeoImageSource({
       url: "https://macarte.ign.fr/api/image/" + game.feature.properties.img,
