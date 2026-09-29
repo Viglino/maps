@@ -426,9 +426,16 @@ dialog.dist button.again:hover {
 dialog.dist[data-win] button.again {
   display: none;
 }
+dialog.dist .content {
+  position: relative;
+  z-index: 2;
+}
 dialog.dist p {
   font-size: 1.5em;
   margin: -0.5em 0 1em;
+}
+dialog.dist p.title {
+  margin: 0.5em 0 -0.5em;
 }
 dialog.dist span {
   font-size: 1.1em;

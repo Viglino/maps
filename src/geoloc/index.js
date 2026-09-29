@@ -90,8 +90,10 @@ document.querySelector('.validate button').addEventListener('click', e => {
       const dist = getDistance(pos, game.feature.geometry.coordinates);
       if (dist < 1000) {
         ddist.dataset.win = '';
+        ddist.querySelector('p.title').textContent = game.feature.properties.titre;
       } else {
         delete ddist.dataset.win;
+        ddist.querySelector('p.title').textContent = '';
       }
       ddist.dataset.dist = dist;
       ddist.querySelector('span').textContent = toKMString(dist);
@@ -226,7 +228,8 @@ function showImage(id) {
     return;
   }
   document.querySelector('aside img').src = "https://macarte.ign.fr/api/image/" + game.feature.properties.img;
-  document.querySelector('.copy').innerText = (game.feature.properties.cimg || '') + ' ' + (game.feature.properties.date || '');
+  document.querySelector('.copy').innerText = (game.feature.properties.cimg || '') 
+    + (game.feature.properties.date ? ' 📅 ' + game.feature.properties.date : '');
   const imgLayer = new GeoImageLayer({
     source: new GeoImageSource({
       url: "https://macarte.ign.fr/api/image/" + game.feature.properties.img,
